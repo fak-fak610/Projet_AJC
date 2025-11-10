@@ -1,0 +1,428 @@
+/* Partie acceuil */
+
+body {
+    font-family: "Arial", sans-serif;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.resources-menu a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    padding: 5px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+footer {
+    background: #222;
+    color: white;
+    padding: 20px 0;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+footer a:hover {
+    color: #ccc;
+}
+
+.paragraphe-centre {
+    text-align: center;
+}
+
+.Gael-text-middle {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.Gael-text-middle p {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}
+
+.images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.images img {
+    width: 350px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .images {
+        grid-template-columns: 1fr;
+    }
+    .images img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.image-text {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.sidebar-help {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.help-button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.help-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .sidebar-help {
+        right: 10px;
+        bottom: 10px;
+    }
+    .help-button {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+.col-md-3 {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    height: 320px;
+}
+
+.col-md-3:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.col-md-3 img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.col-md-3:hover img {
+    transform: scale(1.05);
+}
+
+.col-md-3 p {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.carousel-item img {
+    height: 418px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 0;
+}
+
+
+/* partie documents */
+
+.upload-hero {
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.upload-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://cdn.prod.website-files.com/66153b9f3cb891501ecbf45d/663e30f7d73071214e993f20_what-is-cybersecurity.jpg') no-repeat center center/cover;
+    filter: blur(6px) brightness(0.7);
+    z-index: 0;
+}
+
+.upload-hero__content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.upload-card {
+    max-width: 500px;
+}
+
+.biblio-hero {
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    /* optionnel */
+    overflow: hidden;
+}
+
+.biblio-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://cdn.prod.website-files.com/66153b9f3cb891501ecbf45d/663e30f7d73071214e993f20_what-is-cybersecurity.jpg') no-repeat center center/cover;
+    filter: blur(6px) brightness(0.7);
+    z-index: 0;
+}
+
+.biblio-hero__content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+
+/* partie livre */
+
+
+/* Bannière hero style Europeana */
+
+.banniere-europeana {
+    position: relative;
+    width: 100%;
+    /* prend toute la largeur disponible */
+    max-width: 1600px;
+    /* limite pour grands écrans */
+    height: 450px;
+    /* hauteur fixe */
+    margin: 0 auto 30px auto;
+    /* centré sous navbar, espace en bas */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background-image: url('https://cdn.futura-sciences.com/buildsv6/images/square870/7/0/a/70a8d57a09_104568_lave-en-coussin-noaa.jpg');
+    background-position: center;
+    background-size: cover;
+    /* Animation légère au chargement */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: apparaitre 1s forwards;
+}
+
+
+/* Overlay bleu flou Europeana, moins intense */
+
+.overlay-flou {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 85, 182, 0.45);
+    /* bleu Europeana exact */
+    backdrop-filter: blur(8px);
+    /* moins flou */
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    color: white;
+}
+
+
+/* Animation cléframes */
+
+.explore-themes {
+    padding: 30px 0;
+    background-color: #f5f5f5;
+}
+
+.explore-themes h2 {
+    text-align: center;
+    /* centre le texte */
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.explore-themes h2::after {
+    content: "";
+    display: block;
+    width: 30%;
+    /* largeur du trait */
+    height: 1px;
+    /* épaisseur du trait */
+    background: #333;
+    /* couleur du trait */
+    margin: 8px auto 0 auto;
+    /* centre le trait sous le texte */
+}
+
+.explore-themes .carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.explore-themes .carousel {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+}
+
+.explore-themes .card {
+    flex: 0 0 auto;
+    width: 190px;
+    /* largeur augmentée */
+    height: 310px;
+    /* hauteur augmentée */
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.explore-themes .card img {
+    width: 100%;
+    height: 230px;
+    /* images plus grandes */
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.explore-themes .card p {
+    margin: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+.explore-themes button.prev,
+.explore-themes button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.explore-themes button.prev {
+    left: 0;
+}
+
+.explore-themes button.next {
+    right: 0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .explore-themes .card {
+        width: 220px;
+        height: 260px;
+    }
+    .explore-themes .card img {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .explore-themes .card {
+        width: 180px;
+        height: 210px;
+    }
+    .explore-themes .card img {
+        height: 130px;
+    }
+}
+
+@keyframes apparaitre {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

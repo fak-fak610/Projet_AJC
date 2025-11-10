@@ -1,0 +1,55 @@
+/* formations.css */
+
+body {
+  background-color: #f8f9fa;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  color: #232e59;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.row-cols-1 .card,
+.row-cols-md-2 .card,
+.row-cols-lg-3 .card {
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  color: #003366;
+  font-weight: bold;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.btn-primary {
+  background-color: #232e59;
+  border-color: #232e59;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}

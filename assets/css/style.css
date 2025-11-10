@@ -1,0 +1,191 @@
+body.mooc-page {
+  background-color: #f8f9fa;
+}
+
+body.mooc-page h1 {
+  text-align: center;
+  margin-top: 20px;
+  color: #232e59;
+}
+
+body.mooc-page .search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Panneau de filtres */
+body.mooc-page .filters-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+body.mooc-page .filters-panel.open {
+  max-height: 1000px;
+}
+
+/* Carte de filtres */
+body.mooc-page .filter-card {
+  background-color: #232e59 !important;
+  border: none;
+  margin-top: 0;
+  transition: margin-top 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  transform: scaleY(0);
+  opacity: 0;
+  transform-origin: top;
+}
+
+body.mooc-page .filters-panel.open .filter-card {
+  transform: scaleY(1);
+  opacity: 1;
+  margin-top: 10px;
+}
+
+body.mooc-page .filter-card .card-body,
+body.mooc-page .filter-card label,
+body.mooc-page .filter-card h2,
+body.mooc-page .filter-card i,
+body.mooc-page .filter-card .form-label {
+  color: #fff !important;
+}
+
+body.mooc-page .filter-card .form-select {
+  background-color: #232e59;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+body.mooc-page .filter-card .form-select option {
+  color: #232e59;
+  background: #fff;
+}
+
+/* Bouton filtre */
+body.mooc-page #toggleFilters {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+body.mooc-page #toggleFilters:hover {
+  background-color: #218838;
+}
+
+/* Cartes de MOOCs */
+body.mooc-page .card {
+  border: 1px solid #ddd;
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+}
+
+body.mooc-page .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.mooc-page .card-title {
+  color: #003366;
+  font-weight: bold;
+}
+
+body.mooc-page .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+body.mooc-page .btn-primary,
+body.mooc-page .btn-custom {
+  background-color: #232e59 !important;
+  border-color: #232e59 !important;
+  color: white;
+}
+
+body.mooc-page .btn-primary:hover,
+body.mooc-page .btn-custom:hover {
+  background-color: #1a2142 !important;
+  border-color: #1a2142 !important;
+  color: white;
+}
+
+.footer-card {
+  background: #111; /* Noir profond */
+  color: #fff;
+  margin-top: 40px;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.footer-logo {
+  max-width: 120px;
+  max-height: 60px;
+  filter: brightness(0) invert(1); /* Blanc sur fond noir si logo sombre */
+}
+
+.footer-card h5 {
+  font-weight: bold;
+  color: #ffd700;
+  letter-spacing: 1px;
+}
+
+.footer-card .footer-link {
+  color: #ffd700;
+  text-decoration: none;
+  font-size: 1.05em;
+  margin-bottom: 2px;
+  transition: color 0.2s;
+}
+.footer-card .footer-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-card .footer-social a {
+  color: #ffd700;
+  font-size: 1.4em;
+  margin: 0 7px;
+  transition: color 0.2s;
+  display: inline-block;
+}
+.footer-card .footer-social a:hover {
+  color: #fff;
+}
+
+.footer-card .footer-hr {
+  border-color: #222;
+}
+
+.footer-card i {
+  color: #ffd700;
+  margin-right: 6px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .footer-card .text-md-start,
+  .footer-card .text-md-end {
+    text-align: center !important;
+  }
+  .footer-card .row > div {
+    margin-bottom: 18px;
+  }
+  .footer-logo {
+    margin-bottom: 10px;
+  }
+}
+
+/* Centrer le bouton "Plus de cours" */
+.text-center .btn.btn-primary {
+  min-width: 160px;
+}
+
+/* S'assurer que les boutons dans les 3 cartes ont la même position */
+.card.h-100.d-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
