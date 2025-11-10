@@ -1,61 +1,74 @@
-<?php include("includes/header.php"); ?>
+<?php include '../includes/header.php'; ?>
 
-<section class="upload-hero d-flex align-items-center">
-  <div class="upload-hero__overlay" aria-hidden="true"></div>
+<div class="container my-5">
+    <h1 class="text-center mb-4">📚 Bibliothèque numérique</h1>
+    <p class="text-center text-muted">Partagez et consultez des documents informatiques utiles.</p>
 
-  <div class="container position-relative text-center upload-hero__content">
-    <h1 class="display-5 fw-bold text-white mb-2">Bibliothèque numérique</h1>
-    <p class="lead text-white-50 mb-4">Partagez et consultez des documents informatiques utiles.</p>
-
-    <!-- Formulaire d'upload -->
-    <div class="upload-card card shadow-lg mx-auto">
-      <div class="card-body p-4">
-        <h5 class="mb-2">📤 Partager un document informatique</h5>
-        <p class="text-muted small mb-3">Formats autorisés : PDF, DOC, DOCX, PPTX, TXT, ODT, XLSX</p>
-
-        <?php if (!empty($uploadMessage)): ?>
-          <div class="alert <?= str_starts_with($uploadMessage,'✅') ? 'alert-success' : 'alert-danger' ?> py-2 mb-3">
-            <?= htmlspecialchars($uploadMessage) ?>
-          </div>
-        <?php endif; ?>
-
-        <form method="post" enctype="multipart/form-data" class="upload-form">
-          <input type="file"
-                 name="doc"
-                 class="form-control form-control-sm mb-2"
-                 accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.odt,.xlsx"
-                 required>
-          <button type="submit" class="btn btn-primary btn-sm w-100">Uploader</button>
-        </form>
-
-        <small class="text-muted d-block mt-2">
-          💡 Astuce : privilégiez des fichiers légers pour un accès rapide et plus écologique.
-        </small>
-      </div>
-    </div>
-
-    <!-- Slides des derniers fichiers uploadés -->
-    <?php
-    $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), ['.', '..']);
-    if(!empty($files)): ?>
-        <h5 class="mt-4 text-white">📂 Derniers fichiers uploadés :</h5>
-        <div class="d-flex overflow-auto pb-2">
-            <?php foreach($files as $file): ?>
-                <a href="<?= $dir . urlencode($file) ?>" download
-                   class="card text-center text-dark me-2"
-                   style="min-width: 150px; flex: 0 0 auto;">
-                    <div class="card-body p-2">
-                        <?= htmlspecialchars($file) ?>
-                    </div>
-                </a>
-            <?php endforeach; ?>
+    <?php if (!empty($message)): ?>
+        <div class="alert alert-<?= htmlspecialchars($type) ?> alert-dismissible fade show" role="alert">
+            <?= htmlspecialchars($message) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    <?php else: ?>
-        <p class="text-white small mt-2">Aucun document n'a encore été uploadé.</p>
     <?php endif; ?>
 
-  </div>
-</section>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <!-- Formulaire d'upload -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">📤 Partager un document informatique</h5>
+                <form method="post" enctype="multipart/form-data" class="mt-3">
+                    <div class="mb-3">
+                        <label for="document" class="form-label">Choisir un fichier</label>
+                        <input type="file" name="document" id="document" class="form-control" required>
+                        <small class="text-muted">Formats autorisés : PDF, DOC, DOCX, PPTX, TXT, ODT, XLSX</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Uploader
+                    </button>
+                </form>
+                <p class="mt-3 mb-0 text-muted"><small>💡 <strong>Astuce :</strong> privilégiez des fichiers légers pour un accès rapide et plus écologique.</small></p>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-warning text-center">
+            🔒 Vous devez être <a href="index.php?page=connexion" class="alert-link">connecté</a> pour uploader des documents.
+        </div>
+    <?php endif; ?>
 
-<?php include("includes/footer.php"); ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Liste des documents -->
+    <h3 class="mt-5 mb-3">📁 Documents disponibles</h3>
+    <?php if (!empty($documents)): ?>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>📄 Nom du document</th>
+                        <th>📅 Date d'upload</th>
+                        <th>⬇️ Télécharger</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($documents as $doc): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($doc['nom']) ?></td>
+                            <td><?= date('d/m/Y à H:i', strtotime($doc['upload_time'])) ?></td>
+                            <td>
+                                <a href="<?= htmlspecialchars($doc['chemin']) ?>" 
+                                   class="btn btn-sm btn-outline-primary" 
+                                   download>
+                                    <i class="fas fa-download"></i> Télécharger
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info text-center">
+            ℹ️ Aucun document n'a encore été uploadé.
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php include '../includes/footer.php'; ?>
