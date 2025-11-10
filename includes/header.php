@@ -23,15 +23,19 @@ if (session_status() === PHP_SESSION_NONE) {
     
     <!-- CSS conditionnels pour pages spécifiques -->
     <?php
-    $current_page = basename($_SERVER['PHP_SELF']);
-    if ($current_page === 'mes_favoris.php'): ?>
+    $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SELF']);
+    if ($current_page === 'mes_favoris'): ?>
         <link rel="stylesheet" href="../assets/css/mes_favoris.css">
-    <?php elseif ($current_page === 'mooc.php'): ?>
+    <?php elseif ($current_page === 'mooc'): ?>
         <link rel="stylesheet" href="../assets/css/mooc.css">
         <link rel="stylesheet" href="../assets/css/header_mooc.css">
     <?php elseif (strpos($current_page, 'bibliotheque') !== false): ?>
         <link rel="stylesheet" href="../assets/css/bibli.css">
     <?php endif; ?>
+    <?php if (strpos($current_page, 'bibliotheque') !== false || strpos($current_page, 'livres') !== false): ?>
+    <link rel="stylesheet" href="../assets/css/bibli.css">
+    <?php endif; ?>
+
 </head>
 <body>
 
