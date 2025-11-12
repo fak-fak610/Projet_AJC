@@ -53,8 +53,13 @@ class User {
         return password_verify($password, $hashedPassword);
     }
 
-    public static function login($username, $password) {
-        $user = self::getByUsername($username);
+    public static function login($login, $password) {
+        // Essayer d'abord par username
+        $user = self::getByUsername($login);
+        if (!$user) {
+            // Si pas trouvé par username, essayer par email
+            $user = self::getByEmail($login);
+        }
         if ($user && self::verifyPassword($password, $user['password'])) {
             return $user;
         }
