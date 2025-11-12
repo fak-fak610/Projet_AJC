@@ -1,7 +1,10 @@
 <?php
 session_start();
+require_once '../config.php';
+require_once '../model/Database.php';
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$pdo = new PDO('mysql:host=localhost;dbname=ajc_mooc_biblio_formation;charset=utf8mb4', 'root', '');
+$pdo = Database::getConnection();
 $stmt = $pdo->prepare('SELECT * FROM moocs WHERE id = :id');
 $stmt->execute([':id' => $id]);
 $mooc = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,12 +31,38 @@ if ($isConnected && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actio
         $favori_ok = "already";
     }
 }
+
+// ✅ Fonction pour convertir l'URL YouTube en format embed
+function getYouTubeEmbedUrl($url) {
+    // Si c'est déjà un lien embed, on le garde
+    if (strpos($url, 'youtube.com/embed/') !== false) {
+        return $url;
+    }
+    
+    // Si c'est une vidéo archive.org ou autre, on garde l'URL
+    if (strpos($url, 'archive.org') !== false) {
+        return $url;
+    }
+    
+    // Extraire l'ID de la vidéo YouTube depuis différents formats
+    $videoId = '';
+    if (preg_match('/youtube\.com\/watch\?v=([^&]+)/', $url, $matches)) {
+        $videoId = $matches[1];
+    } elseif (preg_match('/youtu\.be\/([^?]+)/', $url, $matches)) {
+        $videoId = $matches[1];
+    }
+    
+    return $videoId ? "https://www.youtube.com/embed/{$videoId}" : $url;
+}
+
+$embedUrl = getYouTubeEmbedUrl($mooc['video']);
+$isYouTube = strpos($embedUrl, 'youtube.com') !== false;
 ?>
 
 <?php include '../includes/header.php'; ?>
 <div class="container mt-5">
     <a href="../public/index.php?page=mooc" class="btn btn-secondary mb-3">← Retour</a>
-    <h1><?= htmlspecialchars($mooc['titre'] ) ?></h1>
+    <h1><?= htmlspecialchars($mooc['titre']) ?></h1>
     <img src="<?= htmlspecialchars($mooc['image']) ?>" alt="Image MOOC" class="img-fluid mb-3" style="max-height:220px; object-fit:cover"/>
 
     <p class="lead"><?= htmlspecialchars($mooc['description']) ?></p>
@@ -45,14 +74,23 @@ if ($isConnected && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actio
     <?php if (!empty($mooc['video'])): ?>
         <div class="my-4">
             <strong>Vidéo du cours :</strong>
-            <!-- ===== BLOC MODIFIÉ CI-DESSOUS ===== -->
             <div class="ratio ratio-16x9">
-                <video controls>
-                    <source src="<?= htmlspecialchars($mooc['video']) ?>" type="video/mp4">
-                    Désolé, votre navigateur ne supporte pas les vidéos intégrées.
-                </video>
+                <?php if ($isYouTube): ?>
+                    <!-- ✅ Vidéo YouTube avec iframe -->
+                    <iframe 
+                        src="<?= htmlspecialchars($embedUrl) ?>" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                <?php else: ?>
+                    <!-- ✅ Vidéo MP4 classique (archive.org ou autre) -->
+                    <video controls>
+                        <source src="<?= htmlspecialchars($embedUrl) ?>" type="video/mp4">
+                        Désolé, votre navigateur ne supporte pas les vidéos intégrées.
+                    </video>
+                <?php endif; ?>
             </div>
-            <!-- ===== FIN DU BLOC MODIFIÉ ===== -->
         </div>
     <?php endif; ?>
 
@@ -60,26 +98,26 @@ if ($isConnected && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actio
     <?php if ($isConnected): ?>
         <form method="post" class="mb-3">
             <input type="hidden" name="action" value="favori">
-            <button type="submit" class="btn btn-warning">Ajouter aux favoris</button>
+            <button type="submit" class="btn btn-warning">⭐ Ajouter aux favoris</button>
         </form>
         <?php if ($favori_ok === true): ?>
-            <div class="alert alert-success">Ajouté à vos favoris !</div>
+            <div class="alert alert-success">✅ Ajouté à vos favoris !</div>
         <?php elseif ($favori_ok === "already"): ?>
-            <div class="alert alert-info">Ce MOOC est déjà dans vos favoris.</div>
+            <div class="alert alert-info">ℹ️ Ce MOOC est déjà dans vos favoris.</div>
         <?php endif; ?>
     <?php else: ?>
         <div class="alert alert-danger mb-3">
-            Connectez-vous pour ajouter ce MOOC à vos favoris !
+            🔒 Connectez-vous pour ajouter ce MOOC à vos favoris !
         </div>
     <?php endif; ?>
 
-    <h4>Quiz</h4>
-    <form method="post" action="#">
-        <?= $mooc['quizz']; ?>
-
-
-        <button type="submit" class="btn btn-primary mt-2">Soumettre</button>
-    </form>
+    <?php if (!empty($mooc['quizz'])): ?>
+        <h4 class="mt-4">📝 Quiz</h4>
+        <form method="post" action="#" class="border p-3 bg-light rounded">
+            <?= $mooc['quizz']; ?>
+            <button type="submit" class="btn btn-primary mt-3">Soumettre</button>
+        </form>
+    <?php endif; ?>
 </div>
 
 <?php include '../includes/footer.php'; ?>

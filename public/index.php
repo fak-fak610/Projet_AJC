@@ -70,9 +70,13 @@ switch ($page) {
         break;
 
     case 'inscription':
-        require_once '../controller/LoginController.php';
-        $controller = new LoginController();
-        $controller->register();
+        require_once '../controller/InscriptionController.php';
+        $controller = new InscriptionController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->register();
+        } else {
+            $controller->index();
+        }
         break;
 
     case 'profil':
