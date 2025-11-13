@@ -11,6 +11,22 @@ class LoginController {
             $login = $_POST['login'];
             $password = $_POST['password'];
 
+            // Vérifier d'abord si c'est un admin
+            require_once '../model/Database.php';
+            $pdo = Database::getConnection();
+            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ? OR email = ?");
+            $stmt->execute([$login, $login]);
+            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($admin && password_verify($password, $admin['password'])) {
+                session_start();
+                $_SESSION['admin_id'] = $admin['id'];
+                $_SESSION['admin_username'] = $admin['username'];
+                header('Location: index.php?page=admin_dashboard');
+                exit;
+            }
+
+            // Sinon, vérifier si c'est un utilisateur normal
             $user = User::login($login, $password);
             if ($user) {
                 session_start();

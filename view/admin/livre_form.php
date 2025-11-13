@@ -10,7 +10,7 @@ $action = $isEdit ? 'admin_livre_edit&id=' . intval($_GET['id'] ?? 0) : 'admin_l
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin - <?php echo $isEdit ? 'Modifier' : 'Créer'; ?> Livre</title>
-<link rel="stylesheet" href="/assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body class="admin-page">
 <header class="admin-header">

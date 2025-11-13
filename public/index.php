@@ -53,11 +53,7 @@ switch ($page) {
     case 'admin_login':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->login();
-        } else {
-            $controller->showLogin();
-        }
+        $controller->login();
         break;
 
     case 'admin_dashboard':
@@ -69,65 +65,49 @@ switch ($page) {
     case 'admin_moocs':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        $controller->listMoocs();
+        $controller->moocs();
         break;
 
     case 'admin_mooc_create':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->createMooc();
-        } else {
-            $controller->showMoocForm();
-        }
+        $controller->moocCreate();
         break;
 
     case 'admin_mooc_edit':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->updateMooc();
-        } else {
-            $controller->showMoocForm($_GET['id'] ?? null);
-        }
+        $controller->moocEdit();
         break;
 
     case 'admin_mooc_delete':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        $controller->deleteMooc();
+        $controller->moocDelete();
         break;
 
     case 'admin_livres':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        $controller->listLivres();
+        $controller->livres();
         break;
 
     case 'admin_livre_create':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->createLivre();
-        } else {
-            $controller->showLivreForm();
-        }
+        $controller->livreCreate();
         break;
 
     case 'admin_livre_edit':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->updateLivre();
-        } else {
-            $controller->showLivreForm($_GET['id'] ?? null);
-        }
+        $controller->livreEdit();
         break;
 
     case 'admin_livre_delete':
         require_once '../controller/AdminController.php';
         $controller = new AdminController();
-        $controller->deleteLivre();
+        $controller->livreDelete();
         break;
 
     case 'admin_logout':

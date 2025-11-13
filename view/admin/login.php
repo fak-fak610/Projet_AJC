@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin - Connexion</title>
-<link rel="stylesheet" href="/assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body class="admin-page">
 <div class="admin-container">

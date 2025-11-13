@@ -1,10 +1,15 @@
+<?php
+// view/admin/mooc_form.php
+// Variables attendues : $isEdit (bool), $mooc (array|null), $message, $type
+$action = $isEdit ? 'admin_mooc_edit&id=' . intval($_GET['id'] ?? 0) : 'admin_mooc_create';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin - <?php echo $isEdit ? 'Modifier' : 'Créer'; ?> MOOC</title>
-<link rel="stylesheet" href="/assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body class="admin-page">
 <header class="admin-header">
