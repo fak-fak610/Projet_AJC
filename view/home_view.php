@@ -110,7 +110,9 @@
                                 <h5><?= htmlspecialchars($article['title']) ?></h5>
                                 <p class="text-muted small mb-2"><?= date('d/m/Y H:i', strtotime($article['publishedAt'])) ?></p>
                                 <p><?= htmlspecialchars($article['description'] ?? '') ?></p>
-                                <a href="<?= htmlspecialchars($article['url']) ?>" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">Lire plus</a>
+                                <?php if (!empty($article['url'])): ?>
+                                    <a href="<?= htmlspecialchars($article['url']) ?>" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">Lire plus</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
