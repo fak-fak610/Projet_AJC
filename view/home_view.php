@@ -144,7 +144,9 @@
                                     <p class="text-muted small">Date : <?= date('d/m/Y H:i', strtotime($diffusion['published_date'])) ?> | Durée : <?= gmdate('H:i', $podcast['duration']) ?></p>
                                     <a href="<?= htmlspecialchars($podcast['playerUrl']) ?>" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">Écouter le podcast</a>
                                 <?php else: ?>
-                                    <a href="<?= htmlspecialchars($diffusion['url']) ?>" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">Voir l'émission</a>
+                                    <?php if (!empty($diffusion['url'])): ?>
+                                        <a href="<?= htmlspecialchars($diffusion['url']) ?>" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">Voir l'émission</a>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>
