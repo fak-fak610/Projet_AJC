@@ -172,6 +172,13 @@ switch ($page) {
         $controller->upload();
         break;
 
+        
+    case 'mooc_revolution':
+        require_once __DIR__ . '/../controller/MoocRevolutionController.php';
+        $controller = new MoocRevolutionController();
+        $controller->index();
+        break;
+
     default:
         require_once '../controller/HomeController.php';
         $controller = new HomeController();

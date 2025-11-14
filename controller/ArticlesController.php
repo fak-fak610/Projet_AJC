@@ -1,6 +1,7 @@
-// controller/ArticlesController.php
 <?php
 require_once('../model/Article.php');
+
+
 
 class ArticlesController {
     public function index() {

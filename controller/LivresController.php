@@ -1,13 +1,11 @@
 <?php
-require_once '../model/Livres.php';
+require_once __DIR__ . '/../model/Livres.php';
 
 class LivresController {
-    public function index() {
-        // Récupérer tous les livres
-        $livres = Livres::getAll();
 
-        // Charger la vue des livres
-        require_once '../view/livres_view.php';
+    public function index() {
+        $livres = Livres::getAll();
+        require __DIR__ . '/../view/livres_view.php';
     }
+
 }
-?>

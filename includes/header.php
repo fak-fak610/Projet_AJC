@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 <body>
 
-<header class="bg-dark py-3 mb-4">
+<header class="bg-dark py-2 mb-0 border-0 shadow-none">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-between">
             <!-- Logo -->

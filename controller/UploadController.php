@@ -1,5 +1,5 @@
 <?php
-require_once '../model/Database.php';
+require_once __DIR__ . '/../config.php';
 
 class UploadController {
     
@@ -8,7 +8,7 @@ class UploadController {
     }
 
     public function upload() {
-        // ✅ Vérifie si la session n'est pas déjà démarrée
+        // ? Vérifie si la session n'est pas déjà démarrée
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }

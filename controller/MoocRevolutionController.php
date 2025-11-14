@@ -1,7 +1,7 @@
 <?php
 class MoocRevolutionController {
     public function index() {
-        include 'view/mooc_revolution_view.php';
+require_once __DIR__ . '/../view/mooc_revolution_view.php';
     }
 }
 ?>

@@ -1,97 +1,114 @@
-<?php include '../includes/header.php'; ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibliothèque numérique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Bannière hero style Europeana -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Ton CSS -->
+    <link rel="stylesheet" href="/projet_ajc_php/assets/css/bibli.css?v=1.5">
+</head>
+
+<body>
+
+<?php include __DIR__ . '/../includes/header.php'; ?>
+
+<!-- Bannière -->
 <div class="banniere-europeana">
   <div class="overlay-flou">
     <h1>Découvrez le patrimoine culturel numérique</h1>
-    <p>Découvrez nos livres et ressources en ligne ✨</p>
+    <p>Découvrez nos livres et ressources en ligne ?</p>
   </div>
 </div>
 
-<!-- === Début Carrousel Explorez par thème === -->
+<?php
+    $categories = [
+        ['label' => 'Bibliotheque', 'url' => 'index.php?page=bibliotheque'],
+        ['label' => 'Articles', 'url' => 'index.php?page=articles'],
+        ['label' => 'Documents', 'url' => 'index.php?page=doc'],
+        ['label' => 'Livres', 'url' => 'index.php?page=livres'],
+    ];
+    ?>
+
+    <div class="row mt-4 justify-content-center">
+        <?php foreach ($categories as $cat): ?>
+            <div class="col-6 col-md-2 mb-2">
+                <a href="<?= $cat['url'] ?>" class="btn btn-outline-dark w-100"><?= $cat['label'] ?></a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+<!-- SECTION LIVRES -->
 <section class="explore-themes" id="carrousel-livres">
   <h2>Explorez par thème</h2>
+
   <div class="carousel-container">
     <button class="prev">&#10094;</button>
+
     <div class="carousel">
-      <?php foreach($livres as $livre): ?>
+      <!-- LIVRES x1 -->
+      <?php foreach ($livres as $livre): ?>
         <div class="card">
           <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
         </div>
       <?php endforeach; ?>
-      <?php foreach($livres as $livre): ?>
+
+      <!-- LIVRES x2 (pour infini) -->
+      <?php foreach ($livres as $livre): ?>
         <div class="card">
           <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
         </div>
       <?php endforeach; ?>
     </div>
+
     <button class="next">&#10095;</button>
   </div>
 </section>
 
-<section class="container py-5">
-  <h2 class="mb-4 fw-bold">📖 Dernières histoires</h2>
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm border-0">
-        <img src="https://picsum.photos/400/250?random=1" class="card-img-top" alt="Image histoire 1">
-        <div class="card-body">
-          <h5 class="card-title">L'évolution de l'informatique</h5>
-          <p class="card-text text-muted">Découvrez comment l'informatique a évolué depuis ses débuts jusqu'à aujourd'hui.</p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Lire plus</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm border-0">
-        <img src="https://picsum.photos/400/250?random=2" class="card-img-top" alt="Image histoire 2">
-        <div class="card-body">
-          <h5 class="card-title">Les pionniers du web</h5>
-          <p class="card-text text-muted">Retour sur les personnes qui ont façonné le web que nous connaissons.</p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Lire plus</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm border-0">
-        <img src="https://picsum.photos/400/250?random=3" class="card-img-top" alt="Image histoire 3">
-        <div class="card-body">
-          <h5 class="card-title">Vers l'intelligence artificielle</h5>
-          <p class="card-text text-muted">Une plongée dans l'avenir de l'IA et ses impacts sur notre quotidien.</p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Lire plus</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <script>
 const carousel = document.querySelector('.carousel');
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
+// Flèches
 prev.addEventListener('click', () => {
-    carousel.scrollBy({ left: -200, behavior: 'smooth' });
+    carousel.scrollBy({ left: -250, behavior: 'smooth' });
 });
-
 next.addEventListener('click', () => {
-    carousel.scrollBy({ left: 200, behavior: 'smooth' });
+    carousel.scrollBy({ left: 250, behavior: 'smooth' });
 });
 
-// Auto-scroll continu
-let scrollAmount = 0;
-setInterval(() => {
-    scrollAmount += 2; // vitesse du défilement
-    if(scrollAmount >= carousel.scrollWidth / 2) {
-        scrollAmount = 0; // boucle
-        carousel.scrollTo({ left: 0 });
+// Scroll infini automatique
+let autoScroll = setInterval(() => {
+    if (carousel.scrollLeft >= (carousel.scrollWidth / 2)) {
+        carousel.scrollLeft = 0;
     }
-    carousel.scrollBy({ left: 2 });
+    carousel.scrollLeft += 2;
 }, 20);
+
+// Reset scroll après clic flèche
+function restartAuto() {
+    clearInterval(autoScroll);
+    setTimeout(() => {
+        autoScroll = setInterval(() => {
+            if (carousel.scrollLeft >= (carousel.scrollWidth / 2)) {
+                carousel.scrollLeft = 0;
+            }
+            carousel.scrollLeft += 2;
+        }, 20);
+    }, 800);
+}
+
+prev.addEventListener('click', restartAuto);
+next.addEventListener('click', restartAuto);
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
+
+</body>
+</html>
