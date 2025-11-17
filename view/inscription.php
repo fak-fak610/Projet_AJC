@@ -31,7 +31,7 @@
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" autocomplete="new-password" required>
-                <small class="form-text text-muted">Le mot de passe doit contenir au moins 8 caractères, un chiffre et un symbole (ex: !@#$%^&*).</small>
+                <small class="form-text text-muted">Le mot de passe doit contenir au moins 6 caractères, un chiffre et un symbole (ex: !@#$%^&*).</small>
             </div>
             <div class="mb-4">
                 <label for="confirm-password" class="form-label">Confirmer le mot de passe</label>

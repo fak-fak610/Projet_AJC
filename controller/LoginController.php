@@ -25,12 +25,6 @@ class LoginController {
                 $_SESSION['user_role'] = $admin['role'];
                 header('Location: index.php?page=admin_dashboard');
                 exit;
-            } else {
-                // Rediriger vers la page de connexion avec un message d'erreur
-                session_start();
-                $_SESSION['message'] = "Identifiants incorrects - Vérifiez votre nom d'utilisateur et mot de passe";
-                header('Location: index.php?page=connexion');
-                exit;
             }
 
             // Sinon, vérifier si c'est un utilisateur normal
@@ -42,7 +36,9 @@ class LoginController {
                 header('Location: index.php?page=home');
                 exit;
             } else {
-                $_SESSION['message'] = "Identifiants incorrects.";
+                // Rediriger vers la page de connexion avec un message d'erreur
+                session_start();
+                $_SESSION['message'] = "Identifiants incorrects - Vérifiez votre nom d'utilisateur et mot de passe";
                 header('Location: index.php?page=connexion');
                 exit;
             }

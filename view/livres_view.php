@@ -51,7 +51,17 @@
       <!-- LIVRES x1 -->
       <?php foreach ($livres as $livre): ?>
         <div class="card">
-          <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
+          <?php
+          $imageSrc = htmlspecialchars($livre['image']);
+          if (filter_var($imageSrc, FILTER_VALIDATE_URL)) {
+              // URL externe
+              $finalSrc = $imageSrc;
+          } else {
+              // Chemin local
+              $finalSrc = '/projet_ajc_php/' . $imageSrc;
+          }
+          ?>
+          <img src="<?= $finalSrc ?>" alt="<?= htmlspecialchars($livre['titre']) ?>" onerror="this.src='/projet_ajc_php/assets/images/placeholder.png'">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
         </div>
       <?php endforeach; ?>
@@ -59,7 +69,17 @@
       <!-- LIVRES x2 (pour infini) -->
       <?php foreach ($livres as $livre): ?>
         <div class="card">
-          <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
+          <?php
+          $imageSrc = htmlspecialchars($livre['image']);
+          if (filter_var($imageSrc, FILTER_VALIDATE_URL)) {
+              // URL externe
+              $finalSrc = $imageSrc;
+          } else {
+              // Chemin local
+              $finalSrc = '/projet_ajc_php/' . $imageSrc;
+          }
+          ?>
+          <img src="<?= $finalSrc ?>" alt="<?= htmlspecialchars($livre['titre']) ?>" onerror="this.src='/projet_ajc_php/assets/images/placeholder.png'">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
         </div>
       <?php endforeach; ?>

@@ -29,8 +29,8 @@ class InscriptionController {
 
         // Validation du mot de passe
         if ($password) {
-            if (strlen($password) < 8) {
-                $errors[] = "Le mot de passe doit contenir au moins 8 caractères.";
+            if (strlen($password) < 6) {
+                $errors[] = "Le mot de passe doit contenir au moins 6 caractères.";
             }
             if (!preg_match('/[0-9]/', $password)) {
                 $errors[] = "Le mot de passe doit contenir au moins un chiffre.";
@@ -55,8 +55,9 @@ class InscriptionController {
 
         if (empty($errors)) {
             User::create($username, $email, $password);
-            $success = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
-            include '../view/inscription.php';
+            $_SESSION['message'] = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+            header('Location: index.php?page=connexion');
+            exit;
         } else {
             include '../view/inscription.php';
         }

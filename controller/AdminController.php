@@ -1,6 +1,6 @@
 <?php
 require_once '../model/Database.php';
-require_once '../controller/UploadHelper.php';
+require_once 'UploadHelper.php';
 
 class AdminController {
     
