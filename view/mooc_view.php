@@ -17,7 +17,7 @@
             <?php foreach ($currentMoocs as $mooc): ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 mooc-card">
-                        <img src="<?= htmlspecialchars($mooc['image']) ?>" class="card-img-top mooc-image" alt="Illustration MOOC" style="max-height:200px; object-fit:cover;">
+                        <img src="<?php echo filter_var($mooc['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($mooc['image']) : '../' . htmlspecialchars($mooc['image']); ?>" class="card-img-top mooc-image" alt="Illustration MOOC" style="max-height:200px; object-fit:cover;">
                         <div class="card-body d-flex flex-column">
                             <h3 class="card-title h5"><?= htmlspecialchars($mooc['titre']) ?></h3>
                             <p class="card-text"><?= htmlspecialchars($mooc['description']) ?></p>

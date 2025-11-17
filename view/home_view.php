@@ -58,7 +58,7 @@
                 <?php foreach ($coursAlaUne as $cours): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
-                            <img src="<?= htmlspecialchars($cours['image']) ?>" class="card-img-top" alt="Image du cours" style="max-height:180px; object-fit:cover;">
+                            <img src="<?php echo filter_var($cours['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($cours['image']) : '../' . htmlspecialchars($cours['image']); ?>" class="card-img-top" alt="Image du cours" style="max-height:180px; object-fit:cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><?= htmlspecialchars($cours['titre']) ?></h5>
                                 <p class="card-text"><?= htmlspecialchars($cours['description']) ?></p>

@@ -63,7 +63,7 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
 <div class="container mt-5">
     <a href="../public/index.php?page=mooc" class="btn btn-secondary mb-3">← Retour</a>
     <h1><?= htmlspecialchars($mooc['titre']) ?></h1>
-    <img src="<?= htmlspecialchars($mooc['image']) ?>" alt="Image MOOC" class="img-fluid mb-3" style="max-height:220px; object-fit:cover"/>
+    <img src="<?php echo filter_var($mooc['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($mooc['image']) : '../' . htmlspecialchars($mooc['image']); ?>" alt="Image MOOC" class="img-fluid mb-3" style="max-height:220px; object-fit:cover"/>
 
     <p class="lead"><?= htmlspecialchars($mooc['description']) ?></p>
 
@@ -77,18 +77,39 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
             <div class="ratio ratio-16x9">
                 <?php if ($isYouTube): ?>
                     <!-- ✅ Vidéo YouTube avec iframe -->
-                    <iframe 
-                        src="<?= htmlspecialchars($embedUrl) ?>" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    <iframe
+                        src="<?= htmlspecialchars($embedUrl) ?>"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
                 <?php else: ?>
                     <!-- ✅ Vidéo MP4 classique (archive.org ou autre) -->
                     <video controls>
-                        <source src="<?= htmlspecialchars($embedUrl) ?>" type="video/mp4">
+                        <source src="../<?= htmlspecialchars($embedUrl) ?>" type="video/mp4">
                         Désolé, votre navigateur ne supporte pas les vidéos intégrées.
                     </video>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($mooc['audio'])): ?>
+        <div class="my-4">
+            <strong>Audio du cours :</strong>
+            <div class="mt-3">
+                <?php if (filter_var($mooc['audio'], FILTER_VALIDATE_URL)): ?>
+                    <!-- Audio externe -->
+                    <audio controls>
+                        <source src="<?= htmlspecialchars($mooc['audio']) ?>" type="audio/mpeg">
+                        Désolé, votre navigateur ne supporte pas les audios intégrés.
+                    </audio>
+                <?php else: ?>
+                    <!-- Audio local -->
+                    <audio controls>
+                        <source src="../<?= htmlspecialchars($mooc['audio']) ?>" type="audio/mpeg">
+                        Désolé, votre navigateur ne supporte pas les audios intégrés.
+                    </audio>
                 <?php endif; ?>
             </div>
         </div>

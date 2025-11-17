@@ -11,18 +11,32 @@ class LoginController {
             $login = $_POST['login'];
             $password = $_POST['password'];
 
-            // Vérifier d'abord si c'est un admin
+            // Vérifier d'abord si c'est un admin (utilisateur avec role = 'admin')
             require_once '../model/Database.php';
             $pdo = Database::getConnection();
-            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ? OR email = ?");
+            $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE (username = ? OR email = ?) AND role = 'admin'");
             $stmt->execute([$login, $login]);
             $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($admin && password_verify($password, $admin['password'])) {
                 session_start();
-                $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_username'] = $admin['username'];
+                $_SESSION['user_id'] = $admin['id'];
+                $_SESSION['username'] = $admin['username'];
+                $_SESSION['user_role'] = $admin['role'];
                 header('Location: index.php?page=admin_dashboard');
+                exit;
+            } else {
+                // Debug: Afficher les informations de débogage
+                echo "<pre>";
+                echo "Debug connexion admin:\n";
+                echo "Login: $login\n";
+                echo "Password: $password\n";
+                echo "Admin trouvé: " . ($admin ? 'Oui' : 'Non') . "\n";
+                if ($admin) {
+                    echo "Role: " . $admin['role'] . "\n";
+                    echo "Password verify: " . (password_verify($password, $admin['password']) ? 'Oui' : 'Non') . "\n";
+                }
+                echo "</pre>";
                 exit;
             }
 

@@ -11,6 +11,20 @@ $action = $isEdit ? 'admin_livre_edit&id=' . intval($_GET['id'] ?? 0) : 'admin_l
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin - <?php echo $isEdit ? 'Modifier' : 'Créer'; ?> Livre</title>
 <link rel="stylesheet" href="../assets/css/admin.css">
+<script>
+// Aperçu de l'image
+function previewImage(input) {
+    const preview = document.getElementById('image_preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 </head>
 <body class="admin-page">
 <header class="admin-header">
@@ -28,7 +42,7 @@ $action = $isEdit ? 'admin_livre_edit&id=' . intval($_GET['id'] ?? 0) : 'admin_l
 <?php endif; ?>
 
 
-<form method="post" action="index.php?page=<?php echo $action; ?>" class="form-admin">
+<form method="post" action="index.php?page=<?php echo $action; ?>" enctype="multipart/form-data" class="form-admin">
 <label>Titre
 <input type="text" name="titre" value="<?php echo htmlspecialchars($livre['titre'] ?? ''); ?>" required>
 </label>
@@ -44,14 +58,35 @@ $action = $isEdit ? 'admin_livre_edit&id=' . intval($_GET['id'] ?? 0) : 'admin_l
 </label>
 
 
-<label>Image (URL)
-<input type="text" name="image" value="<?php echo htmlspecialchars($livre['image'] ?? ''); ?>">
-</label>
+<label>Image</label>
+<div class="input-group mb-2">
+    <input type="text" name="image_url" placeholder="URL de l'image (ex: https://...)" value="<?php echo htmlspecialchars($livre['image'] ?? ''); ?>">
+</div>
+<div class="text-center my-2"><strong>OU</strong></div>
+<input type="file" name="image_file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" onchange="previewImage(this)">
+<small class="text-muted">Formats acceptés : JPG, JPEG, PNG, GIF, WEBP (max 5 Mo)</small>
 
+<?php if (!empty($livre['image'])): ?>
+    <div class="mt-2">
+        <img src="../<?php echo htmlspecialchars($livre['image']); ?>" id="image_preview" alt="Aperçu" style="max-width: 200px; max-height: 150px; object-fit: cover;">
+    </div>
+<?php else: ?>
+    <img id="image_preview" src="#" alt="Aperçu" style="max-width: 200px; max-height: 150px; display: none; margin-top: 10px; object-fit: cover;">
+<?php endif; ?>
 
-<label>Fichier (URL ou chemin)
-<input type="text" name="fichier" value="<?php echo htmlspecialchars($livre['fichier'] ?? ''); ?>">
-</label>
+<label>Fichier</label>
+<div class="input-group mb-2">
+    <input type="text" name="fichier_url" placeholder="URL du fichier" value="<?php echo htmlspecialchars($livre['fichier'] ?? ''); ?>">
+</div>
+<div class="text-center my-2"><strong>OU</strong></div>
+<input type="file" name="fichier_file" accept=".pdf,.doc,.docx,.txt,.epub,.mobi,.azw,.azw3,.fb2,.rtf,.odt,.xls,.xlsx,.ppt,.pptx,.zip,.rar">
+<small class="text-muted">Formats acceptés : PDF, DOC, DOCX, TXT, EPUB, MOBI, AZW, AZW3, FB2, RTF, ODT, XLS, XLSX, PPT, PPTX, ZIP, RAR (max 50 Mo)</small>
+
+<?php if (!empty($livre['fichier']) && !filter_var($livre['fichier'], FILTER_VALIDATE_URL)): ?>
+    <div class="mt-2 alert alert-info">
+        <i class="fas fa-file"></i> Fichier actuel : <?php echo basename($livre['fichier']); ?>
+    </div>
+<?php endif; ?>
 
 
 <div class="form-actions">

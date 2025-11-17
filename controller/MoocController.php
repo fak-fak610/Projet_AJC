@@ -3,12 +3,8 @@ require_once '../model/mooc.php';
 
 class MoocController {
     public function index() {
-        try {
-            $pdo = new PDO('mysql:host=localhost;dbname=ajc_mooc_biblio_formation;charset=utf8mb4', 'root', '');
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("❌ Connexion échouée : " . $e->getMessage());
-        }
+        require_once '../model/Database.php';
+        $pdo = Database::getConnection();
 
         // Récupérer la recherche si présente
         $q = isset($_GET['q']) ? trim($_GET['q']) : '';

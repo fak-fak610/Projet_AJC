@@ -116,6 +116,24 @@ switch ($page) {
         $controller->logout();
         break;
 
+    case 'admin_users':
+        require_once '../controller/AdminController.php';
+        $controller = new AdminController();
+        $controller->users();
+        break;
+
+    case 'admin_user_change_role':
+        require_once '../controller/AdminController.php';
+        $controller = new AdminController();
+        $controller->userChangeRole();
+        break;
+
+    case 'admin_user_delete':
+        require_once '../controller/AdminController.php';
+        $controller = new AdminController();
+        $controller->userDelete();
+        break;
+
     case 'admin_mooc':
         require_once '../controller/AdminMoocController.php';
         $controller = new AdminMoocController();

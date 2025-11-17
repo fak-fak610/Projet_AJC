@@ -8,16 +8,8 @@ require_once '../model/User.php';
 class HomeController {
     public function index() {
         // Connexion à la base de données
-        try {
-            $pdo = new PDO(
-                'mysql:host=localhost;dbname=ajc_mooc_biblio_formation;charset=utf8mb4',
-                'root',
-                ''
-            );
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("❌ Connexion échouée : " . $e->getMessage());
-        }
+        require_once '../model/Database.php';
+        $pdo = Database::getConnection();
 
         // --- Récupère les 6 derniers MOOC ajoutés ---
         $stmt = $pdo->query('SELECT id, titre, description, image FROM moocs ORDER BY id DESC LIMIT 6');

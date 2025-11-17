@@ -1,5 +1,6 @@
 <?php
 require_once '../model/Database.php';
+require_once '../controller/UploadHelper.php';
 
 class AdminController {
     
@@ -8,9 +9,10 @@ class AdminController {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
-        if (!isset($_SESSION['admin_id'])) {
-            header('Location: index.php?page=admin_login');
+
+        // Vérifier si connecté ET si role = admin
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+            header('Location: index.php?page=connexion');
             exit;
         }
     }
@@ -21,8 +23,8 @@ class AdminController {
             session_start();
         }
         
-        // Si déjà connecté, rediriger vers dashboard
-        if (isset($_SESSION['admin_id'])) {
+        // Si déjà connecté en tant qu'admin, rediriger vers dashboard
+        if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin') {
             header('Location: index.php?page=admin_dashboard');
             exit;
         }
@@ -35,15 +37,22 @@ class AdminController {
             
             try {
                 $pdo = Database::getConnection();
-                $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
-                $stmt->execute([$username]);
-                $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE username = ? OR email = ?");
+                $stmt->execute([$username, $username]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                if ($admin && password_verify($password, $admin['password'])) {
-                    $_SESSION['admin_id'] = $admin['id'];
-                    $_SESSION['admin_username'] = $admin['username'];
-                    header('Location: index.php?page=admin_dashboard');
-                    exit;
+                if ($user && password_verify($password, $user['password'])) {
+                    // Vérifier si c'est un admin
+                    if ($user['role'] !== 'admin') {
+                        $error = "Accès refusé : vous n'avez pas les droits administrateur";
+                    } else {
+                        // Connexion réussie
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['user_role'] = $user['role'];
+                        header('Location: index.php?page=admin_dashboard');
+                        exit;
+                    }
                 } else {
                     $error = "Identifiants incorrects";
                 }
@@ -66,16 +75,17 @@ class AdminController {
             $stats = [
                 'moocs' => $pdo->query("SELECT COUNT(*) FROM moocs")->fetchColumn(),
                 'livres' => $pdo->query("SELECT COUNT(*) FROM livres")->fetchColumn(),
-                'users' => $pdo->query("SELECT COUNT(*) FROM utilisateurs")->fetchColumn(),
+                'users' => $pdo->query("SELECT COUNT(*) FROM utilisateurs WHERE role = 'user'")->fetchColumn(),
+                'admins' => $pdo->query("SELECT COUNT(*) FROM utilisateurs WHERE role = 'admin'")->fetchColumn(),
                 'documents' => $pdo->query("SELECT COUNT(*) FROM documents_user")->fetchColumn(),
             ];
             
             // Derniers ajouts
             $derniers_moocs = $pdo->query("SELECT titre, date FROM moocs ORDER BY date DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
-            $derniers_users = $pdo->query("SELECT username, id FROM utilisateurs ORDER BY id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+            $derniers_users = $pdo->query("SELECT username, id, role FROM utilisateurs ORDER BY id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
             
         } catch (PDOException $e) {
-            $stats = ['moocs' => 0, 'livres' => 0, 'users' => 0, 'documents' => 0];
+            $stats = ['moocs' => 0, 'livres' => 0, 'users' => 0, 'admins' => 0, 'documents' => 0];
             $derniers_moocs = [];
             $derniers_users = [];
         }
@@ -89,10 +99,88 @@ class AdminController {
             session_start();
         }
         
-        unset($_SESSION['admin_id']);
-        unset($_SESSION['admin_username']);
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+        unset($_SESSION['user_role']);
         session_destroy();
-        header('Location: index.php?page=admin_login');
+        header('Location: index.php?page=connexion');
+        exit;
+    }
+    
+    // ========== GESTION UTILISATEURS ==========
+    
+    public function users() {
+        $this->checkAdmin();
+        
+        $success = $_GET['success'] ?? '';
+        
+        try {
+            $pdo = Database::getConnection();
+            $stmt = $pdo->query("SELECT * FROM utilisateurs ORDER BY id DESC");
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $users = [];
+            $error = $e->getMessage();
+        }
+        
+        require_once '../view/admin/users.php';
+    }
+    
+    public function userChangeRole() {
+        $this->checkAdmin();
+        
+        $userId = $_GET['id'] ?? 0;
+        $newRole = $_GET['role'] ?? '';
+        
+        if ($userId && in_array($newRole, ['user', 'admin'])) {
+            try {
+                $pdo = Database::getConnection();
+                
+                // Ne pas se retirer soi-même les droits admin
+                if ($userId == $_SESSION['admin_id'] && $newRole == 'user') {
+                    header('Location: index.php?page=admin_users&error=cannot_demote_self');
+                    exit;
+                }
+                
+                $stmt = $pdo->prepare("UPDATE utilisateurs SET role = ? WHERE id = ?");
+                $stmt->execute([$newRole, $userId]);
+                
+                header('Location: index.php?page=admin_users&success=role_changed');
+            } catch (PDOException $e) {
+                header('Location: index.php?page=admin_users&error=change_failed');
+            }
+        } else {
+            header('Location: index.php?page=admin_users&error=invalid_params');
+        }
+        exit;
+    }
+    
+    public function userDelete() {
+        $this->checkAdmin();
+        
+        $userId = $_GET['id'] ?? 0;
+        
+        // Ne pas se supprimer soi-même
+        if ($userId == $_SESSION['admin_id']) {
+            header('Location: index.php?page=admin_users&error=cannot_delete_self');
+            exit;
+        }
+        
+        try {
+            $pdo = Database::getConnection();
+            
+            // Supprimer les favoris de l'utilisateur
+            $stmt = $pdo->prepare("DELETE FROM mooc_favoris WHERE user_id = ?");
+            $stmt->execute([$userId]);
+            
+            // Supprimer l'utilisateur
+            $stmt = $pdo->prepare("DELETE FROM utilisateurs WHERE id = ?");
+            $stmt->execute([$userId]);
+            
+            header('Location: index.php?page=admin_users&success=deleted');
+        } catch (PDOException $e) {
+            header('Location: index.php?page=admin_users&error=delete_failed');
+        }
         exit;
     }
     
@@ -126,21 +214,34 @@ class AdminController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $pdo = Database::getConnection();
+                
+                // Gestion de l'image
+                $imagePath = $_POST['image_url'] ?? '';
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'moocs/images');
+                }
+                
+                // Gestion de la vidéo
+                $videoPath = $_POST['video_url'] ?? '';
+                if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $videoPath = UploadHelper::uploadVideo($_FILES['video_file'], 'moocs/videos');
+                }
+                
                 $stmt = $pdo->prepare("INSERT INTO moocs (titre, description, image, duree, effort, rythme, video, quizz) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                 $stmt->execute([
                     $_POST['titre'],
                     $_POST['description'],
-                    $_POST['image'],
+                    $imagePath,
                     $_POST['duree'],
                     $_POST['effort'],
                     $_POST['rythme'],
-                    $_POST['video'],
+                    $videoPath,
                     $_POST['quizz'] ?? ''
                 ]);
                 
                 header('Location: index.php?page=admin_moocs&success=created');
                 exit;
-            } catch (PDOException $e) {
+            } catch (Exception $e) {
                 $message = "Erreur : " . $e->getMessage();
                 $type = "danger";
             }
@@ -161,15 +262,37 @@ class AdminController {
             $pdo = Database::getConnection();
             
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $stmt = $pdo->prepare("SELECT image, video FROM moocs WHERE id = ?");
+                $stmt->execute([$id]);
+                $oldMooc = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                // Gestion de l'image
+                $imagePath = $_POST['image_url'] ?? $oldMooc['image'];
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($oldMooc['image'] && !UploadHelper::isExternalUrl($oldMooc['image'])) {
+                        UploadHelper::deleteFile($oldMooc['image']);
+                    }
+                    $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'moocs/images');
+                }
+                
+                // Gestion de la vidéo
+                $videoPath = $_POST['video_url'] ?? $oldMooc['video'];
+                if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($oldMooc['video'] && !UploadHelper::isExternalUrl($oldMooc['video'])) {
+                        UploadHelper::deleteFile($oldMooc['video']);
+                    }
+                    $videoPath = UploadHelper::uploadVideo($_FILES['video_file'], 'moocs/videos');
+                }
+                
                 $stmt = $pdo->prepare("UPDATE moocs SET titre=?, description=?, image=?, duree=?, effort=?, rythme=?, video=?, quizz=? WHERE id=?");
                 $stmt->execute([
                     $_POST['titre'],
                     $_POST['description'],
-                    $_POST['image'],
+                    $imagePath,
                     $_POST['duree'],
                     $_POST['effort'],
                     $_POST['rythme'],
-                    $_POST['video'],
+                    $videoPath,
                     $_POST['quizz'] ?? '',
                     $id
                 ]);
@@ -187,7 +310,7 @@ class AdminController {
                 exit;
             }
             
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $message = "Erreur : " . $e->getMessage();
             $type = "danger";
         }
@@ -203,7 +326,20 @@ class AdminController {
         try {
             $pdo = Database::getConnection();
             
-            // Supprimer aussi les favoris associés
+            // Récupérer les fichiers à supprimer
+            $stmt = $pdo->prepare("SELECT image, video FROM moocs WHERE id = ?");
+            $stmt->execute([$id]);
+            $mooc = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Supprimer les fichiers locaux
+            if ($mooc['image'] && !UploadHelper::isExternalUrl($mooc['image'])) {
+                UploadHelper::deleteFile($mooc['image']);
+            }
+            if ($mooc['video'] && !UploadHelper::isExternalUrl($mooc['video'])) {
+                UploadHelper::deleteFile($mooc['video']);
+            }
+            
+            // Supprimer les favoris
             $stmt = $pdo->prepare("DELETE FROM mooc_favoris WHERE mooc_id = ?");
             $stmt->execute([$id]);
             
@@ -248,16 +384,31 @@ class AdminController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $pdo = Database::getConnection();
-                $stmt = $pdo->prepare("INSERT INTO livres (titre, image, description) VALUES (?, ?, ?)");
+                
+                // Gestion de l'image
+                $imagePath = $_POST['image_url'] ?? '';
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'livres/images');
+                }
+                
+                // Gestion du fichier PDF
+                $fichierPath = '';
+                if (isset($_FILES['fichier_file']) && $_FILES['fichier_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $fichierPath = UploadHelper::uploadFile($_FILES['fichier_file'], 'livres/files', ['pdf', 'epub'], 20 * 1024 * 1024);
+                }
+                
+                $stmt = $pdo->prepare("INSERT INTO livres (titre, auteur, image, fichier, description) VALUES (?, ?, ?, ?, ?)");
                 $stmt->execute([
                     $_POST['titre'],
-                    $_POST['image'],
+                    $_POST['auteur'] ?? '',
+                    $imagePath,
+                    $fichierPath,
                     $_POST['description']
                 ]);
                 
                 header('Location: index.php?page=admin_livres&success=created');
                 exit;
-            } catch (PDOException $e) {
+            } catch (Exception $e) {
                 $message = "Erreur : " . $e->getMessage();
                 $type = "danger";
             }
@@ -278,10 +429,34 @@ class AdminController {
             $pdo = Database::getConnection();
             
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $stmt = $pdo->prepare("UPDATE livres SET titre=?, image=?, description=? WHERE id=?");
+                $stmt = $pdo->prepare("SELECT image, fichier FROM livres WHERE id = ?");
+                $stmt->execute([$id]);
+                $oldLivre = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                // Gestion de l'image
+                $imagePath = $_POST['image_url'] ?? $oldLivre['image'];
+                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($oldLivre['image'] && !UploadHelper::isExternalUrl($oldLivre['image'])) {
+                        UploadHelper::deleteFile($oldLivre['image']);
+                    }
+                    $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'livres/images');
+                }
+                
+                // Gestion du fichier
+                $fichierPath = $oldLivre['fichier'] ?? '';
+                if (isset($_FILES['fichier_file']) && $_FILES['fichier_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($oldLivre['fichier']) {
+                        UploadHelper::deleteFile($oldLivre['fichier']);
+                    }
+                    $fichierPath = UploadHelper::uploadFile($_FILES['fichier_file'], 'livres/files', ['pdf', 'epub'], 20 * 1024 * 1024);
+                }
+                
+                $stmt = $pdo->prepare("UPDATE livres SET titre=?, auteur=?, image=?, fichier=?, description=? WHERE id=?");
                 $stmt->execute([
                     $_POST['titre'],
-                    $_POST['image'],
+                    $_POST['auteur'] ?? '',
+                    $imagePath,
+                    $fichierPath,
                     $_POST['description'],
                     $id
                 ]);
@@ -299,7 +474,7 @@ class AdminController {
                 exit;
             }
             
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $message = "Erreur : " . $e->getMessage();
             $type = "danger";
         }
@@ -314,6 +489,21 @@ class AdminController {
         
         try {
             $pdo = Database::getConnection();
+            
+            // Récupérer les fichiers
+            $stmt = $pdo->prepare("SELECT image, fichier FROM livres WHERE id = ?");
+            $stmt->execute([$id]);
+            $livre = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Supprimer les fichiers
+            if ($livre['image'] && !UploadHelper::isExternalUrl($livre['image'])) {
+                UploadHelper::deleteFile($livre['image']);
+            }
+            if ($livre['fichier']) {
+                UploadHelper::deleteFile($livre['fichier']);
+            }
+            
+            // Supprimer le livre
             $stmt = $pdo->prepare("DELETE FROM livres WHERE id = ?");
             $stmt->execute([$id]);
             
