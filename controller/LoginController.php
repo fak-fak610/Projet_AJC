@@ -26,17 +26,10 @@ class LoginController {
                 header('Location: index.php?page=admin_dashboard');
                 exit;
             } else {
-                // Debug: Afficher les informations de débogage
-                echo "<pre>";
-                echo "Debug connexion admin:\n";
-                echo "Login: $login\n";
-                echo "Password: $password\n";
-                echo "Admin trouvé: " . ($admin ? 'Oui' : 'Non') . "\n";
-                if ($admin) {
-                    echo "Role: " . $admin['role'] . "\n";
-                    echo "Password verify: " . (password_verify($password, $admin['password']) ? 'Oui' : 'Non') . "\n";
-                }
-                echo "</pre>";
+                // Rediriger vers la page de connexion avec un message d'erreur
+                session_start();
+                $_SESSION['message'] = "Identifiants incorrects - Vérifiez votre nom d'utilisateur et mot de passe";
+                header('Location: index.php?page=connexion');
                 exit;
             }
 

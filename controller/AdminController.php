@@ -22,25 +22,25 @@ class AdminController {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         // Si déjà connecté en tant qu'admin, rediriger vers dashboard
         if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin') {
             header('Location: index.php?page=admin_dashboard');
             exit;
         }
-        
+
         $error = '';
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = trim($_POST['username'] ?? '');
             $password = $_POST['password'] ?? '';
-            
+
             try {
                 $pdo = Database::getConnection();
                 $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE username = ? OR email = ?");
                 $stmt->execute([$username, $username]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                
+
                 if ($user && password_verify($password, $user['password'])) {
                     // Vérifier si c'est un admin
                     if ($user['role'] !== 'admin') {
@@ -54,13 +54,13 @@ class AdminController {
                         exit;
                     }
                 } else {
-                    $error = "Identifiants incorrects";
+                    $error = "Identifiants incorrects - Vérifiez votre nom d'utilisateur et mot de passe";
                 }
             } catch (PDOException $e) {
                 $error = "Erreur de connexion : " . $e->getMessage();
             }
         }
-        
+
         require_once '../view/admin/login.php';
     }
     
@@ -137,7 +137,7 @@ class AdminController {
                 $pdo = Database::getConnection();
                 
                 // Ne pas se retirer soi-même les droits admin
-                if ($userId == $_SESSION['admin_id'] && $newRole == 'user') {
+                if ($userId == $_SESSION['user_id'] && $newRole == 'user') {
                     header('Location: index.php?page=admin_users&error=cannot_demote_self');
                     exit;
                 }
@@ -161,7 +161,7 @@ class AdminController {
         $userId = $_GET['id'] ?? 0;
         
         // Ne pas se supprimer soi-même
-        if ($userId == $_SESSION['admin_id']) {
+        if ($userId == $_SESSION['user_id']) {
             header('Location: index.php?page=admin_users&error=cannot_delete_self');
             exit;
         }
