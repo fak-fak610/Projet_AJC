@@ -1,84 +1,14 @@
-/* mooc.css */
-/* Styles spécifiques au contenu de la page MOOC */
+/* Styles spécifiques pour la page MOOC */
 
-.mooc-page .mooc-main {
-  padding-top: 40px;
-}
-
-.mooc-page .mooc-filter {
-  position: sticky;
-  top: 120px;
-  z-index: 1;
-}
-
-.mooc-page .filters-panel {
-  border: 1px solid #ccc;
-}
-
-/* Cartes MOOC */
-.mooc-page .mooc-card {
-  transition: transform 0.2s ease-in-out;
-}
-.mooc-page .mooc-card:hover {
-  transform: translateY(-5px);
-}
-
-.mooc-page .mooc-image {
-  object-fit: cover;
-  height: 200px;
-}
-
-/* Pagination */
-.mooc-page .pagination .page-link {
-  color: #333;
-}
-.mooc-page .pagination .active .page-link {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: #fff;
-}
-
-/* -------- FILTRE MOOC -------- */
-
-/* Le panneau filtre est masqué au départ mais animé */
-#filtersPanel {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
-  pointer-events: none;
-}
-
-/* Quand .show est ajouté par JS (bouton filtre) */
-#filtersPanel.show {
-  max-height: 800px;
-  opacity: 1;
-  margin-top: 8px;
-  pointer-events: auto;
-}
-
-/* Style du bouton filtre */
-#toggleFilters {
-  font-size: 1.1em;
-  letter-spacing: 1px;
-  font-weight: 500;
-}
-
-#toggleFilters i {
-  margin-right: 7px;
-}
-
-/* Optionnel : fond sur bloc select/label pour le filtre */
-.form-label {
-  font-weight: 500;
-  color: #232e59;
-}
-.form-select {
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
+/* Boutons en bleu clair personnalisé #0056b3 */
 .btn-primary {
-  background-color: #232e59;
-  border-color: #232e59;
+  background-color: #0056b3 !important;
+  border-color: #0056b3 !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #004494 !important;
+  border-color: #004494 !important;
+  color: white !important;
 }

@@ -98,20 +98,6 @@ body.mooc-page .card-img-top {
   object-fit: cover;
 }
 
-body.mooc-page .btn-primary,
-body.mooc-page .btn-custom {
-  background-color: #232e59 !important;
-  border-color: #232e59 !important;
-  color: white;
-}
-
-body.mooc-page .btn-primary:hover,
-body.mooc-page .btn-custom:hover {
-  background-color: #1a2142 !important;
-  border-color: #1a2142 !important;
-  color: white;
-}
-
 .footer-card {
   background: #111; /* Noir profond */
   color: #fff;

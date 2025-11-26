@@ -26,13 +26,13 @@ class MoocController {
 
         // Récupérer MOOC paginés selon recherche
         if ($q !== '') {
-            $stmt = $pdo->prepare('SELECT * FROM moocs WHERE titre LIKE :q ORDER BY id LIMIT :start, :count');
+            $stmt = $pdo->prepare('SELECT id, titre, description, image FROM moocs WHERE titre LIKE :q ORDER BY id LIMIT :start, :count');
             $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
             $stmt->bindValue(':start', $startIndex, PDO::PARAM_INT);
             $stmt->bindValue(':count', $moocsPerPage, PDO::PARAM_INT);
             $stmt->execute();
         } else {
-            $stmt = $pdo->prepare('SELECT * FROM moocs ORDER BY id LIMIT :start, :count');
+            $stmt = $pdo->prepare('SELECT id, titre, description, image FROM moocs ORDER BY id LIMIT :start, :count');
             $stmt->bindValue(':start', $startIndex, PDO::PARAM_INT);
             $stmt->bindValue(':count', $moocsPerPage, PDO::PARAM_INT);
             $stmt->execute();

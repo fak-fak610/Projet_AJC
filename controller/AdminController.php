@@ -111,18 +111,18 @@ class AdminController {
     
     public function users() {
         $this->checkAdmin();
-        
+
         $success = $_GET['success'] ?? '';
-        
+
         try {
             $pdo = Database::getConnection();
-            $stmt = $pdo->query("SELECT * FROM utilisateurs ORDER BY id DESC");
+            $stmt = $pdo->query("SELECT id, username, email, role FROM utilisateurs ORDER BY id DESC");
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             $users = [];
             $error = $e->getMessage();
         }
-        
+
         require_once '../view/admin/users.php';
     }
     
@@ -188,18 +188,18 @@ class AdminController {
     
     public function moocs() {
         $this->checkAdmin();
-        
+
         $success = $_GET['success'] ?? '';
-        
+
         try {
             $pdo = Database::getConnection();
-            $stmt = $pdo->query("SELECT * FROM moocs ORDER BY id DESC");
+            $stmt = $pdo->query("SELECT id, titre, date FROM moocs ORDER BY id DESC");
             $moocs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             $moocs = [];
             $error = $e->getMessage();
         }
-        
+
         require_once '../view/admin/moocs.php';
     }
     
@@ -358,18 +358,18 @@ class AdminController {
     
     public function livres() {
         $this->checkAdmin();
-        
+
         $success = $_GET['success'] ?? '';
-        
+
         try {
             $pdo = Database::getConnection();
-            $stmt = $pdo->query("SELECT * FROM livres ORDER BY id DESC");
+            $stmt = $pdo->query("SELECT id, titre, auteur, date_ajout FROM livres ORDER BY id DESC");
             $livres = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             $livres = [];
             $error = $e->getMessage();
         }
-        
+
         require_once '../view/admin/livres.php';
     }
     
