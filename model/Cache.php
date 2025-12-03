@@ -1,6 +1,7 @@
 <?php
 class Cache {
     private static $pdo;
+    private static $tableCreated = false;
 
     public static function init() {
         self::$pdo = Database::getConnection();
@@ -37,7 +38,7 @@ class Cache {
 
         $sql = "CREATE TABLE IF NOT EXISTS cache (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            cache_key VARCHAR(255) UNIQUE NOT NULL,
+            cache_key VARCHAR(191) UNIQUE NOT NULL,
             data LONGTEXT NOT NULL,
             expires_at DATETIME NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
