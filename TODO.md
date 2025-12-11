@@ -1,21 +1,33 @@
-# Optimisation de la vitesse du site PHP
+# Performance Optimization TODO
 
-## Tâches à effectuer
+## High Priority (TTFB Reduction)
 
-### 1. Optimisation du .htaccess
+- [x] Create cache table in database for API results
+- [x] Create Cache model for managing cached data
+- [x] Modify HomeController to use cached API results instead of live calls
+- [x] Fix footer.php CSS path (wrong relative path)
 
-- [x] Ajouter la compression gzip/deflate pour les fichiers texte
-- [x] Ajouter des headers de cache pour les assets statiques (CSS, JS, images)
-- [x] S'assurer que les règles ne cassent pas le développement local (WAMP)
+## Medium Priority (Page Weight Reduction)
 
-### 2. Optimisation des requêtes SQL
+- [ ] Analyze and remove unused CSS/JS files
+- [ ] Combine and minify CSS files
+- [ ] Optimize images (compress, lazy load)
+- [ ] Enable more aggressive compression in .htaccess
 
-- [x] Remplacer SELECT \* par des colonnes spécifiques dans les modèles
-- [x] Ajouter LIMIT aux requêtes de listes où approprié
-- [x] Vérifier que les prepared statements sont utilisés partout
+## Low Priority (Further Optimizations)
 
-### 3. Tests et validation
+- [ ] Implement lazy loading for images
+- [ ] Add database query optimizations (indexes if needed)
+- [ ] Review and optimize other controllers for similar bottlenecks
 
-- [x] Tester le site en local après modifications
-- [x] Vérifier que toutes les pages fonctionnent normalement
-- [ ] Mesurer les améliorations de performance si possible
+## New Optimizations (High Priority)
+
+- [ ] Cache database queries in HomeController for moocs, livres, and actualites
+- [ ] Optimize Cache::createTableIfNotExists() to avoid running on every request
+- [ ] Fix inconsistent footer.php include paths in views (e.g., documents_view.php)
+
+## Testing
+
+- [ ] Test TTFB reduction to <1s
+- [ ] Test page weight <1MB
+- [ ] Verify site functionality after changes
