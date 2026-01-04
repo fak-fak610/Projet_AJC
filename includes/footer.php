@@ -7,4 +7,4 @@
     </nav>
 </footer>
 
-<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="../assets/css/footer.css">

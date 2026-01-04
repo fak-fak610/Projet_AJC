@@ -176,38 +176,42 @@ footer a:hover {
     line-height: 1.3;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 
-header, .navbar, .search-bar {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
+header,
+.navbar,
+.search-bar {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 #carouselExampleAutoplaying {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  border-top: none !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
 }
 
 .carousel {
-  border-top: none !important;
+    border-top: none !important;
 }
 
 .carousel-inner {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .carousel-item img {
-  width: 100%;
-  height: 50vh; /* réduit la hauteur à 50% de la fenêtre */
-  object-fit: cover;
-  display: block;
-  border: none !important;
+    width: 100%;
+    height: 50vh;
+    /* réduit la hauteur à 50% de la fenêtre */
+    object-fit: cover;
+    display: block;
+    border: none !important;
 }
 
 .carousel-item img {
@@ -215,13 +219,9 @@ header, .navbar, .search-bar {
 }
 
 header {
-  border-bottom: none !important;
-  box-shadow: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
-
-
-
-
 
 
 /* partie documents */
@@ -468,7 +468,6 @@ header {
 
 /*moocsrévolutionpédagogique*/
 
-
 .art-hero {
     position: relative;
     min-height: 350px;
@@ -484,8 +483,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://www.shutterstock.com/image-vector/mooc-massive-open-online-course-260nw-2045924408.jpg')
-        no-repeat center center;
+    background: url('https://www.shutterstock.com/image-vector/mooc-massive-open-online-course-260nw-2045924408.jpg') no-repeat center center;
     background-size: cover;
     filter: blur(6px) brightness(0.6);
     z-index: 0;
@@ -496,10 +494,6 @@ header {
     z-index: 1;
     color: white;
 }
-
-
-
-
 
 .story-text {
     background-color: #fff;
@@ -532,8 +526,8 @@ header {
     max-height: 250px;
 }
 
-/* Api de actualité biblio */
 
+/* Api de actualité biblio */
 
 .nouveautes-section {
     margin-top: 2rem;
@@ -557,7 +551,7 @@ header {
 .nouveaute-card {
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     flex: 0 0 300px;
     display: flex;
@@ -567,7 +561,7 @@ header {
 
 .nouveaute-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .nouveaute-card img {
@@ -600,106 +594,171 @@ header {
     text-decoration: underline;
 }
 
-
-
-
-
-
-
-
-
 body {
-  background: #f4f4f4;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #333;
+    background: #f4f4f4;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 .section-livres {
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: auto;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .section-livres h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  font-size: 1.8rem;
-  font-weight: 600;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 .conteneur-carrousel {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .zone-carrousel {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 16px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 16px;
 }
 
-.zone-carrousel::-webkit-scrollbar { display: none; }
+.zone-carrousel::-webkit-scrollbar {
+    display: none;
+}
 
 .carte-livre {
-  min-width: 200px;
-  width: 200px;
-  height: 300px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
-  flex: 0 0 auto;
-  position: relative;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-  transition: transform 0.3s, box-shadow 0.3s;
+    min-width: 200px;
+    width: 200px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    flex: 0 0 auto;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .carte-livre:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .overlay-livre {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.7));
-  color: #fff;
-  padding: 12px;
-  border-radius: 0 0 12px 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: #fff;
+    padding: 12px;
+    border-radius: 0 0 12px 12px;
 }
 
-.overlay-livre h3 { margin: 0; font-size: 1rem; font-weight: bold; }
-.overlay-livre p { font-size: 0.9rem; margin-top: 4px; }
+.overlay-livre h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.overlay-livre p {
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
 .bouton-lire {
-  display: inline-block;
-  margin-top: 6px;
-  background: #2c82c9;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.85rem;
+    display: inline-block;
+    margin-top: 6px;
+    background: #2c82c9;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
 }
-.bouton-lire:hover { background: #1f5f95; }
 
-.precedent, .suivant {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  background: rgba(255,255,255,0.9);
-  border: none;
-  padding: 10px 14px;
-  cursor: pointer;
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  font-size: 1.5rem;
+.bouton-lire:hover {
+    background: #1f5f95;
 }
-.precedent:hover, .suivant:hover { background: rgba(240,240,240,1); }
-.precedent { left: 8px; } .suivant { right: 8px; }
-.precedent:disabled, .suivant:disabled { opacity:0.4; cursor:default; }
+
+.precedent,
+.suivant {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem;
+}
+
+.precedent:hover,
+.suivant:hover {
+    background: rgba(240, 240, 240, 1);
+}
+
+.precedent {
+    left: 8px;
+}
+
+.suivant {
+    right: 8px;
+}
+
+.precedent:disabled,
+.suivant:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+
+/* --- Images haute qualité --- */
+
+.high-quality-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
+
+/* --- Bloc Droits d'auteur --- */
+
+.copyright-section {
+    background: #f6f6f6;
+    border-radius: 10px;
+}
+
+.copyright-text {
+    font-family: var(--your-typo, Arial);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+
+/* --- Mention légale YouTube --- */
+
+.youtube-legal {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    font-family: var(--your-typo, Arial);
+}
+
+.youtube-legal a {
+    text-decoration: underline;
+}
+
+footer {
+    width: 100%;
+    display: block;
+}

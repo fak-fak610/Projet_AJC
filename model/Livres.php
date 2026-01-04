@@ -6,8 +6,8 @@ class Livres {
     public static function getAll() {
         $pdo = Database::getConnection();
 
-        // On sélectionne uniquement les colonnes existantes
-        $sql = "SELECT id, titre, image, description, date_ajout FROM livres";
+       
+        $sql = "SELECT id, titre, image, description, date_ajout, lien FROM livres";
         $stmt = $pdo->query($sql);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -5,13 +5,13 @@
     <!-- Bandeau d'accueil -->
     <section class="mb-5 text-center">
         <h1>Bienvenue sur le Centre MOOC</h1>
-        <p>Découvrez nos formations, MOOC et notre bibliothèque en ligne.</p>
+        <p>Découvrez nos MOOC et notre bibliothèque en ligne.</p>
         <a href="index.php?page=mooc" class="btn btn-primary">Commencer à apprendre</a>
     </section>
 
     <!-- Section des services -->
     <section class="row text-center mb-5">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 mb-3">
             <div class="card p-4 h-100 d-flex flex-column justify-content-between">
                 <div>
                     <i class="fas fa-laptop-code fa-3x mb-3"></i>
@@ -21,17 +21,7 @@
                 <a href="index.php?page=mooc" class="btn btn-outline-primary mt-2">Voir les MOOC</a>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-4 h-100 d-flex flex-column justify-content-between">
-                <div>
-                    <i class="fas fa-graduation-cap fa-3x mb-3"></i>
-                    <h2>Formations</h2>
-                    <p>Développez vos compétences avec nos formations approfondies.</p>
-                </div>
-                <a href="index.php?page=formations" class="btn btn-outline-primary mt-2">Voir les formations</a>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 mb-3">
             <div class="card p-4 h-100 d-flex flex-column justify-content-between">
                 <div>
                     <i class="fas fa-book fa-3x mb-3"></i>
@@ -58,7 +48,7 @@
                 <?php foreach ($coursAlaUne as $cours): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
-                            <img src="<?php echo filter_var($cours['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($cours['image']) : '../' . htmlspecialchars($cours['image']); ?>" class="card-img-top" alt="Image du cours" style="max-height:180px; object-fit:cover;">
+                            <img src="<?php echo filter_var($cours['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($cours['image']) : '../' . htmlspecialchars($cours['image']); ?>" class="card-img-top" alt="Illustration du cours : <?= htmlspecialchars($cours['titre']) ?>" style="max-height:180px; object-fit:cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><?= htmlspecialchars($cours['titre']) ?></h5>
                                 <p class="card-text"><?= htmlspecialchars($cours['description']) ?></p>
@@ -104,7 +94,7 @@
                     <div class="col-md-4 mb-3">
                         <div class="card h-100 border-0 shadow-sm">
                             <?php if(!empty($article['urlToImage'])): ?>
-                                <img src="<?= htmlspecialchars($article['urlToImage']) ?>" class="card-img-top" alt="Image actualité" style="max-height:180px; object-fit:cover;">
+                                <img src="<?= htmlspecialchars($article['urlToImage']) ?>" class="card-img-top" alt="Image illustrant l'actualité éducative : <?= htmlspecialchars($article['title']) ?>" style="max-height:180px; object-fit:cover;">
                             <?php endif; ?>
                             <div class="card-body d-flex flex-column">
                                 <h5><?= htmlspecialchars($article['title']) ?></h5>

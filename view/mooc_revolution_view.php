@@ -22,7 +22,7 @@
        aria-hidden="true"></div>
 
   <div class="container text-center art-hero__content position-relative text-white">
-    <h2 class="fw-bold display-6">Les MOOCs, une révolution pédagogique</h2>
+    <h1 class="fw-bold display-6">Les MOOCs, une révolution pédagogique</h1>
     <p class="lead">Le MOOC repose sur un format 100 % numérique qui combine vidéos pédagogiques, quiz interactifs, forums de discussion et exercices pratiques.</p>
     
     <!-- Bouton avec lien -->
@@ -88,34 +88,33 @@ favorisent l’autonomie et permettent d’échanger avec une communauté intern
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card shadow-sm h-100">
-          <img src="https://missionslocales-bfc.fr/mission-locale-bassin-graylois/wp-content/uploads/sites/6/2020/06/MOOC..png" 
-               class="card-img-top" alt="">
+          <img src="https://missionslocales-bfc.fr/mission-locale-bassin-graylois/wp-content/uploads/sites/6/2020/06/MOOC..png"
+               class="card-img-top" alt="Illustration des MOOCs montrant l'accès ouvert à l'éducation en ligne">
           <div class="card-body">
             <p class="card-text small">
-              <strong></strong><em></em>   
-              
+              Les MOOCs permettent un apprentissage flexible et accessible à tous, favorisant l'inclusion éducative.
             </p>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm h-100">
-          <img src="https://f.maformation.fr/edito/sites/3/2022/02/cooc-mooc.jpeg" 
-               class="card-img-top" alt="">
+          <img src="https://f.maformation.fr/edito/sites/3/2022/02/cooc-mooc.jpeg"
+               class="card-img-top" alt="Image représentant la collaboration et l'échange dans les cours en ligne">
           <div class="card-body">
             <p class="card-text small">
-              <strong></strong>, <em></em> 
-              
+              Les forums de discussion et les travaux collaboratifs enrichissent l'expérience d'apprentissage.
             </p>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm h-100">
-          <img src="https://digitiz.fr/wp-content/uploads/2018/09/MOOC.png" 
-               class="card-img-top" alt="">
+          <img src="https://digitiz.fr/wp-content/uploads/2018/09/MOOC.png"
+               class="card-img-top" alt="Graphique illustrant la révolution pédagogique apportée par les MOOCs">
           <div class="card-body">
             <p class="card-text small">
+              Les MOOCs transforment l'enseignement traditionnel en plaçant l'apprenant au centre du processus.
             </p>
           </div>
         </div>

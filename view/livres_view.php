@@ -19,7 +19,7 @@
 <div class="banniere-europeana">
   <div class="overlay-flou">
     <h1>Découvrez le patrimoine culturel numérique</h1>
-    <p>Découvrez nos livres et ressources en ligne ?</p>
+    <p> Découvrez notre collection complète de livres et ressources en ligne </p>
   </div>
 </div>
 
@@ -48,41 +48,23 @@
     <button class="prev">&#10094;</button>
 
     <div class="carousel">
+
       <!-- LIVRES x1 -->
       <?php foreach ($livres as $livre): ?>
-        <div class="card">
-          <?php
-          $imageSrc = htmlspecialchars($livre['image']);
-          if (filter_var($imageSrc, FILTER_VALIDATE_URL)) {
-              // URL externe
-              $finalSrc = $imageSrc;
-          } else {
-              // Chemin local
-              $finalSrc = '/projet_ajc_php/' . $imageSrc;
-          }
-          ?>
-          <img src="<?= $finalSrc ?>" alt="<?= htmlspecialchars($livre['titre']) ?>" onerror="this.src='/projet_ajc_php/assets/images/placeholder.png'">
+        <a href="<?= htmlspecialchars($livre['lien']) ?>" target="_blank" class="card" style="text-decoration:none; color:inherit;">
+          <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
-        </div>
+        </a>
       <?php endforeach; ?>
 
       <!-- LIVRES x2 (pour infini) -->
       <?php foreach ($livres as $livre): ?>
-        <div class="card">
-          <?php
-          $imageSrc = htmlspecialchars($livre['image']);
-          if (filter_var($imageSrc, FILTER_VALIDATE_URL)) {
-              // URL externe
-              $finalSrc = $imageSrc;
-          } else {
-              // Chemin local
-              $finalSrc = '/projet_ajc_php/' . $imageSrc;
-          }
-          ?>
-          <img src="<?= $finalSrc ?>" alt="<?= htmlspecialchars($livre['titre']) ?>" onerror="this.src='/projet_ajc_php/assets/images/placeholder.png'">
+        <a href="<?= htmlspecialchars($livre['lien']) ?>" target="_blank" class="card" style="text-decoration:none; color:inherit;">
+          <img src="<?= htmlspecialchars($livre['image']) ?>" alt="<?= htmlspecialchars($livre['titre']) ?>">
           <p><?= htmlspecialchars($livre['titre']) ?></p>
-        </div>
+        </a>
       <?php endforeach; ?>
+
     </div>
 
     <button class="next">&#10095;</button>

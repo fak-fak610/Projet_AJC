@@ -4,7 +4,7 @@ require_once('Database.php');
 class User {
     public static function getById($id) {
         $pdo = Database::getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+       $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");   
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

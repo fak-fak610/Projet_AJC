@@ -1,14 +1,14 @@
 /* Styles spécifiques pour la page MOOC */
 
-/* Boutons en bleu clair personnalisé #0056b3 */
+/* Boutons en turquoise */
 .btn-primary {
-  background-color: #0056b3 !important;
-  border-color: #0056b3 !important;
+  background-color: #00cca3 !important;
+  border-color: #00cca3 !important;
   color: white !important;
 }
 
 .btn-primary:hover {
-  background-color: #004494 !important;
-  border-color: #004494 !important;
+  background-color: #00a085 !important;
+  border-color: #00a085 !important;
   color: white !important;
 }

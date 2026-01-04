@@ -26,6 +26,7 @@ if (session_status() === PHP_SESSION_NONE) {
     $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SELF']);
     if ($current_page === 'mes_favoris'): ?>
         <link rel="stylesheet" href="../assets/css/mes_favoris.css">
+        <link rel="stylesheet" href="../assets/css/header_mooc.css">
     <?php elseif ($current_page === 'mooc'): ?>
         <link rel="stylesheet" href="../assets/css/mooc.css">
         <link rel="stylesheet" href="../assets/css/header_mooc.css">
@@ -48,17 +49,18 @@ if (session_status() === PHP_SESSION_NONE) {
             </a>
 
             <!-- Navigation -->
-            <ul class="nav justify-content-center flex-grow-1 mb-0">
-                <li class="nav-item"><a class="nav-link text-white" href="index.php?page=home"><i class="fa-solid fa-house"></i> Accueil</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="index.php?page=mooc"><i class="fa-solid fa-headphones"></i> MOOC</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="index.php?page=formations"><i class="fa-solid fa-graduation-cap"></i> Formations</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="index.php?page=bibliotheque"><i class="fa-solid fa-book"></i> Bibliothèque</a></li>
+            <nav class="flex-grow-1">
+                <ul class="nav justify-content-center mb-0">
+                    <li class="nav-item"><a class="nav-link text-white" href="index.php?page=home"><i class="fa-solid fa-house"></i> Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="index.php?page=mooc"><i class="fa-solid fa-headphones"></i> MOOC</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="index.php?page=bibliotheque"><i class="fa-solid fa-book"></i> Bibliothèque</a></li>
 
-                <!-- Mes favoris SEULEMENT si connecté -->
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li class="nav-item"><a class="nav-link text-white" href="index.php?page=mes_favoris"><i class="fas fa-heart"></i> Mes favoris</a></li>
-                <?php endif; ?>
-            </ul>
+                    <!-- Mes favoris SEULEMENT si connecté -->
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item"><a class="nav-link text-white" href="index.php?page=mes_favoris"><i class="fas fa-heart"></i> Mes favoris</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
 
             <!-- Boutons utilisateur -->
             <div class="ms-auto d-flex gap-2">

@@ -23,6 +23,7 @@
     </div>
 
     <!-- Flèches du premier carrousel -->
+     <link rel="stylesheet" href="/projet_ajc_php/assets/css/bibli.css?v=2.5">
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Précédent</span>
@@ -91,26 +92,56 @@
         </button>
     </div>
 
-    <!-- === Contenus liés === -->
-    <h4 class="mb-4 text-center">Contenus liés</h4>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-        <?php foreach ($liensConnexes as $item): ?>
-            <div class="col">
-                <div class="card h-100">
-                    <?php if ($item['type'] === 'img'): ?>
-                        <img src="<?= htmlspecialchars($item['src']) ?>" class="card-img-top" alt="<?= htmlspecialchars($item['title']) ?>" style="height: 180px; object-fit: cover;">
-                    <?php else: ?>
-                        <div class="ratio ratio-16x9">
-                            <iframe src="<?= htmlspecialchars($item['src']) ?>" title="<?= htmlspecialchars($item['title']) ?>" allowfullscreen></iframe>
-                        </div>
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <p class="card-text text-truncate"><?= htmlspecialchars($item['title']) ?></p>
+   
+<!-- === Contenus liés === -->
+<h4 class="mb-4 text-center">Contenus liés</h4>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 justify-content-center">
+    <?php foreach ($liensConnexes as $item): ?>
+        <div class="col">
+            <div class="card h-100">
+
+                <?php if ($item['type'] === 'img'): ?>
+                    <!-- Images rangées + uniformisées -->
+                    <img src="<?= htmlspecialchars($item['src']) ?>" 
+                         class="card-img-top" 
+                         alt="<?= htmlspecialchars($item['title']) ?>" 
+                         style="height: 260px; width: 100%; object-fit: cover;">
+                <?php else: ?>
+                    <!-- Vidéos YouTube -->
+                    <div class="ratio ratio-16x9">
+                        <iframe src="<?= htmlspecialchars($item['src']) ?>" 
+                                title="<?= htmlspecialchars($item['title']) ?>" 
+                                allowfullscreen>
+                        </iframe>
                     </div>
+                <?php endif; ?>
+
+                <div class="card-body">
+                    <p class="card-text text-truncate text-center">
+                        <?= htmlspecialchars($item['title']) ?>
+                    </p>
                 </div>
+
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
 </div>
+
+<!-- ========================================================= -->
+<!-- 🔥 BLOC DROITS D’AUTEUR + CONFIDENTIALITÉ + POLITIQUES -->
+<!-- ========================================================= -->
+<div class="mt-4 mb-4 text-center" style="font-size: 13px; opacity: 0.8; line-height: 1.5;">
+    Les vidéos intégrées proviennent de YouTube et restent la propriété exclusive de leurs créateurs.
+    <br>Cette intégration est conforme aux règles de l’API YouTube.
+    <br>
+    <a href="https://policies.google.com/privacy" target="_blank">Politique de confidentialité</a> ·
+    <a href="https://www.youtube.com/t/terms" target="_blank">Conditions d'utilisation</a> ·
+    <a href="https://www.youtube.com/howyoutubeworks" target="_blank">Fonctionnement de YouTube</a>
+</div>
+
+</div> <!-- FIN container -->
+
+<!-- Footer hors du container = OK -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <?php include '../includes/footer.php'; ?>

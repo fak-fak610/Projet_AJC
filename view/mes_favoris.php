@@ -16,7 +16,7 @@ include '../includes/header.php';
             <?php foreach ($favoris as $mooc): ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 text-center">
-                        <img src="../assets/images/<?= htmlspecialchars($mooc['image']) ?>" class="card-img-top" style="max-height:180px; object-fit:cover;" alt="<?= htmlspecialchars($mooc['titre']) ?>">
+                        <img src="<?php echo filter_var($mooc['image'], FILTER_VALIDATE_URL) ? htmlspecialchars($mooc['image']) : '../assets/images/' . htmlspecialchars($mooc['image']); ?>" class="card-img-top" style="max-height:180px; object-fit:cover;" alt="Illustration du MOOC favori : <?= htmlspecialchars($mooc['titre']) ?>">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h4 class="card-title"><?= htmlspecialchars($mooc['titre']) ?></h4>
                             <p class="card-text text-truncate"><?= htmlspecialchars($mooc['description']) ?></p>
