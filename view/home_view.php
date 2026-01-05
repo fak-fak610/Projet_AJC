@@ -10,7 +10,7 @@
     </section>
 
     <!-- Section des services -->
-    <section class="row text-center mb-5">
+    <section class="row text-center justify-content-center mb-5">
         <div class="col-md-6 mb-3">
             <div class="card p-4 h-100 d-flex flex-column justify-content-between">
                 <div>
