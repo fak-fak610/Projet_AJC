@@ -21,7 +21,7 @@ class Cache {
         return null;
     }
 
-    public static function set($key, $data, $ttl = 3600) { // 1 hour default
+    public static function set($key, $data, $ttl = 3600) { // 1 hour 
         if (!self::$pdo) self::init();
 
         $expiresAt = date('Y-m-d H:i:s', time() + $ttl);

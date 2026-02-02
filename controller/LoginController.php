@@ -11,7 +11,7 @@ class LoginController {
             $login = $_POST['login'];
             $password = $_POST['password'];
 
-            // Vérifier d'abord si c'est un admin (utilisateur avec role = 'admin')
+            
             require_once '../model/Database.php';
             $pdo = Database::getConnection();
             $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE (username = ? OR email = ?) AND role = 'admin'");
@@ -27,7 +27,7 @@ class LoginController {
                 exit;
             }
 
-            // Sinon, vérifier si c'est un utilisateur normal
+            
             $user = User::login($login, $password);
             if ($user) {
                 session_start();
@@ -36,7 +36,7 @@ class LoginController {
                 header('Location: index.php?page=home');
                 exit;
             } else {
-                // Rediriger vers la page de connexion avec un message d'erreur
+                
                 session_start();
                 $_SESSION['message'] = "Identifiants incorrects - Vérifiez votre nom d'utilisateur et mot de passe";
                 header('Location: index.php?page=connexion');

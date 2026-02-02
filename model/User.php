@@ -54,10 +54,10 @@ class User {
     }
 
     public static function login($login, $password) {
-        // Essayer d'abord par username
+        
         $user = self::getByUsername($login);
         if (!$user) {
-            // Si pas trouvé par username, essayer par email
+           
             $user = self::getByEmail($login);
         }
         if ($user && self::verifyPassword($password, $user['password'])) {

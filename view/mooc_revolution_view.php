@@ -16,7 +16,7 @@
 <section class="art-hero d-flex align-items-center" 
          style="background-image: url('https://www.geekjunior.fr/wp-content/uploads/2023/04/mooc-800x600.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; height: 80vh; position: relative;">
 
-  <!-- superposition sombre -->
+  
   <div class="art-hero__overlay" 
        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4);" 
        aria-hidden="true"></div>
@@ -25,7 +25,7 @@
     <h1 class="fw-bold display-6">Les MOOCs, une révolution pédagogique</h1>
     <p class="lead">Le MOOC repose sur un format 100 % numérique qui combine vidéos pédagogiques, quiz interactifs, forums de discussion et exercices pratiques.</p>
     
-    <!-- Bouton avec lien -->
+    
     <a href="index.php?page=mooc_revolution"
        target="_blank"
        class="btn btn-light mt-3">
@@ -35,7 +35,7 @@
 </section>
 
 
-<!-- Bloc texte style Europeana -->
+
 <section class="story-text py-5">
   <div class="container">
     <div class="row justify-content-center">
@@ -82,7 +82,7 @@ favorisent l’autonomie et permettent d’échanger avec une communauté intern
   </div>
 </section>
 
-<!-- Galerie d’images inspirée d’Europeana -->
+
 <section class="story-gallery py-5">
   <div class="container">
     <div class="row g-4">

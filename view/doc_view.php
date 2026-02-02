@@ -1,6 +1,6 @@
 <?php include '../includes/header.php';?>
 
-<!-- CAROUSEL -->
+
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <?php
@@ -30,7 +30,7 @@
 
 
 
-<!-- CATÉGORIES ET ARTICLES EXISTANTS -->
+
 <div class="container mt-5 text-center">
     <h1 class="display-5 fw-bold">Documents</h1>
     <p class="lead">Explorez notre collection organisée de documents numériques dédiés à l'informatique. Retrouvez des guides pratiques, des manuels, des études et des ressources pédagogiques pour enrichir vos connaissances et rester à jour avec les dernières tendances technologiques.</p>
@@ -53,7 +53,7 @@
 
 
 
-        <!-- Page 2 -->
+        
         <div id="page2" class="flip-page back">
             <h3>Partager un document</h3>
             <p>Uploader un fichier informatique</p>
@@ -65,7 +65,7 @@
 
 <?php include '../includes/footer.php'; ?>
 
-<!-- Scripts -->
+
 <link rel="stylesheet" href="assets/css/flipbook.css?v=1.0">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/flipbook.js?v=1.0"></script>

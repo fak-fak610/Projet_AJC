@@ -13,14 +13,14 @@ if (!$mooc) {
     exit;
 }
 
-// Vérification connexion utilisateur
+
 $isConnected = isset($_SESSION['user_id']);
 
-// Gestion des favoris
+
 $favori_ok = null;
 if ($isConnected && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'favori') {
     $user_id = $_SESSION['user_id'];
-    // Vérifie s'il n'est pas déjà favori
+    
     $favCheck = $pdo->prepare("SELECT COUNT(*) FROM mooc_favoris WHERE user_id=? AND mooc_id=?");
     $favCheck->execute([$user_id, $mooc['id']]);
     if ($favCheck->fetchColumn() == 0) {
@@ -32,19 +32,19 @@ if ($isConnected && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actio
     }
 }
 
-// ✅ Fonction pour convertir l'URL YouTube en format embed
+
 function getYouTubeEmbedUrl($url) {
-    // Si c'est déjà un lien embed, on le garde
+    
     if (strpos($url, 'youtube.com/embed/') !== false) {
         return $url;
     }
     
-    // Si c'est une vidéo archive.org ou autre, on garde l'URL
+    
     if (strpos($url, 'archive.org') !== false) {
         return $url;
     }
     
-    // Extraire l'ID de la vidéo YouTube depuis différents formats
+    
     $videoId = '';
     if (preg_match('/youtube\.com\/watch\?v=([^&]+)/', $url, $matches)) {
         $videoId = $matches[1];
@@ -76,7 +76,7 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
             <strong>Vidéo du cours :</strong>
             <div class="ratio ratio-16x9">
                 <?php if ($isYouTube): ?>
-                    <!-- ✅ Vidéo YouTube avec iframe -->
+                    
                     <iframe
                         src="<?= htmlspecialchars($embedUrl) ?>"
                         frameborder="0"
@@ -84,7 +84,7 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
                         allowfullscreen>
                     </iframe>
                 <?php else: ?>
-                    <!-- ✅ Vidéo MP4 classique (archive.org ou autre) -->
+                    
                     <video controls>
                         <source src="../<?= htmlspecialchars($embedUrl) ?>" type="video/mp4">
                         Désolé, votre navigateur ne supporte pas les vidéos intégrées.
@@ -99,13 +99,13 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
             <strong>Audio du cours :</strong>
             <div class="mt-3">
                 <?php if (filter_var($mooc['audio'], FILTER_VALIDATE_URL)): ?>
-                    <!-- Audio externe -->
+                    
                     <audio controls>
                         <source src="<?= htmlspecialchars($mooc['audio']) ?>" type="audio/mpeg">
                         Désolé, votre navigateur ne supporte pas les audios intégrés.
                     </audio>
                 <?php else: ?>
-                    <!-- Audio local -->
+                    
                     <audio controls>
                         <source src="../<?= htmlspecialchars($mooc['audio']) ?>" type="audio/mpeg">
                         Désolé, votre navigateur ne supporte pas les audios intégrés.
@@ -115,7 +115,7 @@ $isYouTube = strpos($embedUrl, 'youtube.com') !== false;
         </div>
     <?php endif; ?>
 
-    <!-- Bouton Favoris -->
+    
     <?php if ($isConnected): ?>
         <form method="post" class="mb-3">
             <input type="hidden" name="action" value="favori">

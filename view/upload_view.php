@@ -12,7 +12,7 @@
     <?php endif; ?>
 
     <?php if (isset($_SESSION['user_id'])): ?>
-        <!-- Formulaire d'upload -->
+        
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <h5 class="card-title">📤 Partager un document informatique</h5>
@@ -35,7 +35,7 @@
         </div>
     <?php endif; ?>
 
-    <!-- Liste des documents -->
+    
     <h3 class="mt-5 mb-3">📁 Documents disponibles</h3>
     <?php if (!empty($documents)): ?>
         <div class="table-responsive">

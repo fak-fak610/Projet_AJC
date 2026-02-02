@@ -11,7 +11,7 @@ class ArticlesController {
     public function index() {
         $articles = Article::getAll();
 
-        // Ajout des liens connexes aussi (comme dans ton code d'origine)
+        
         $liensConnexes = [
             ['type' => 'video', 'src' => 'https://www.youtube.com/embed/X2wa7qEmVbo?feature=oembed', 'title' => 'Bibliothèque moderne'],
             ['type' => 'video', 'src' => 'https://www.youtube.com/embed/0s_CxsussFE?feature=oembed', 'title' => 'Incorporer le numérique dans le système éducatif'],

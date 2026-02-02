@@ -5,13 +5,13 @@ class DocumentsController {
     public function index() {
         session_start();
 
-        $_SESSION['user_id'] = 1; // ID utilisateur existant dans ta table users
+        $_SESSION['user_id'] = 1; 
         $userId = $_SESSION['user_id'];
 
-        // Connexion à ta base MySQL
+       
         $pdo = Database::getConnection();
 
-        // Dossier d’upload
+        
         $dir = 'documents_biblio/';
         if (!is_dir($dir)) mkdir($dir, 0777, true);
 
@@ -74,7 +74,7 @@ class DocumentsController {
             }
         }
 
-        // Récupérer les fichiers uploadés
+        
         $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), ['.', '..']);
 
         include 'view/documents_view.php';

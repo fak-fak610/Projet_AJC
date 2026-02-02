@@ -1,8 +1,8 @@
 <?php
-// Inclure la protection d'accès admin
+
 include '../includes/admin_check.php';
 
-// Inclure le header après la vérification (pour éviter les erreurs)
+
 include '../includes/header.php';
 ?>
 
@@ -12,17 +12,17 @@ include '../includes/header.php';
             <h1 class="mb-4">Panneau d'administration</h1>
 
             <div class="row g-4">
-                <!-- Statistiques -->
+                
                 <div class="col-md-4">
                     <div class="card bg-primary text-white">
                         <div class="card-body">
                             <h5 class="card-title">Utilisateurs inscrits</h5>
                             <h2 class="mb-0">
                                 <?php
-                                // Exemple de requête pour compter les utilisateurs
-                                // $stmt = $pdo->query("SELECT COUNT(*) FROM users");
-                                // echo $stmt->fetchColumn();
-                                echo "1,234"; // Valeur exemple
+                                
+                                
+                                
+                                echo "1,234"; 
                                 ?>
                             </h2>
                         </div>
@@ -35,10 +35,10 @@ include '../includes/header.php';
                             <h5 class="card-title">MOOCs actifs</h5>
                             <h2 class="mb-0">
                                 <?php
-                                // Exemple de requête pour compter les MOOCs
-                                // $stmt = $pdo->query("SELECT COUNT(*) FROM moocs WHERE status = 'active'");
-                                // echo $stmt->fetchColumn();
-                                echo "89"; // Valeur exemple
+                                
+                               
+                                
+                                echo "89";
                                 ?>
                             </h2>
                         </div>
@@ -51,10 +51,10 @@ include '../includes/header.php';
                             <h5 class="card-title">Commentaires en attente</h5>
                             <h2 class="mb-0">
                                 <?php
-                                // Exemple de requête pour compter les commentaires en attente
-                                // $stmt = $pdo->query("SELECT COUNT(*) FROM comments WHERE status = 'pending'");
-                                // echo $stmt->fetchColumn();
-                                echo "12"; // Valeur exemple
+                                
+                                
+                                
+                                echo "12"; 
                                 ?>
                             </h2>
                         </div>
@@ -62,7 +62,7 @@ include '../includes/header.php';
                 </div>
             </div>
 
-            <!-- Actions administratives -->
+            
             <div class="row mt-5">
                 <div class="col-12">
                     <h3>Actions rapides</h3>

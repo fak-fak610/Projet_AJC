@@ -6,15 +6,15 @@ class MoocController {
         require_once '../model/Database.php';
         $pdo = Database::getConnection();
 
-        // Récupérer la recherche si présente
+        
         $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 
-        // Pagination
+        
         $moocsPerPage = 6;
         $page = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
         $startIndex = ($page - 1) * $moocsPerPage;
 
-        // Calcul du total selon recherche
+        
         if ($q !== '') {
             $stmtTotal = $pdo->prepare('SELECT COUNT(*) FROM moocs WHERE titre LIKE :q');
             $stmtTotal->execute([':q' => "%$q%"]);
@@ -24,7 +24,7 @@ class MoocController {
         $totalMoocs = $stmtTotal->fetchColumn();
         $totalPages = $totalMoocs > 0 ? ceil($totalMoocs / $moocsPerPage) : 1;
 
-        // Récupérer MOOC paginés selon recherche
+        
         if ($q !== '') {
             $stmt = $pdo->prepare('SELECT id, titre, description, image FROM moocs WHERE titre LIKE :q ORDER BY id LIMIT :start, :count');
             $stmt->bindValue(':q', "%$q%", PDO::PARAM_STR);
@@ -51,14 +51,14 @@ class MoocController {
 
         $user_id = $_SESSION['user_id'];
 
-        // Supprimer un favori
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'supprimer_favori') {
             $mooc_id = (int)$_POST['mooc_id'];
             Mooc::removeFavori($user_id, $mooc_id);
             $message = "Favori retiré !";
         }
 
-        // Liste des favoris
+        
         $favoris = Mooc::getFavoris($user_id);
 
         require_once '../view/mes_favoris.php';

@@ -4,13 +4,13 @@ require_once 'UploadHelper.php';
 
 class AdminController {
     
-    // Vérifier si l'utilisateur est admin
+    
     private function checkAdmin() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Vérifier si connecté ET si role = admin
+        
         if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             header('Location: index.php?page=connexion');
             exit;
@@ -23,7 +23,7 @@ class AdminController {
             session_start();
         }
 
-        // Si déjà connecté en tant qu'admin, rediriger vers dashboard
+        
         if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin') {
             header('Location: index.php?page=admin_dashboard');
             exit;
@@ -42,11 +42,11 @@ class AdminController {
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($user && password_verify($password, $user['password'])) {
-                    // Vérifier si c'est un admin
+                    
                     if ($user['role'] !== 'admin') {
                         $error = "Accès refusé : vous n'avez pas les droits administrateur";
                     } else {
-                        // Connexion réussie
+                        
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['username'] = $user['username'];
                         $_SESSION['user_role'] = $user['role'];
@@ -71,7 +71,7 @@ class AdminController {
         try {
             $pdo = Database::getConnection();
             
-            // Statistiques
+            
             $stats = [
                 'moocs' => $pdo->query("SELECT COUNT(*) FROM moocs")->fetchColumn(),
                 'livres' => $pdo->query("SELECT COUNT(*) FROM livres")->fetchColumn(),
@@ -80,7 +80,6 @@ class AdminController {
                 'documents' => $pdo->query("SELECT COUNT(*) FROM documents_user")->fetchColumn(),
             ];
             
-            // Derniers ajouts
             $derniers_moocs = $pdo->query("SELECT titre, date FROM moocs ORDER BY date DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
             $derniers_users = $pdo->query("SELECT username, id, role FROM utilisateurs ORDER BY id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
             
@@ -136,7 +135,7 @@ class AdminController {
             try {
                 $pdo = Database::getConnection();
                 
-                // Ne pas se retirer soi-même les droits admin
+               
                 if ($userId == $_SESSION['user_id'] && $newRole == 'user') {
                     header('Location: index.php?page=admin_users&error=cannot_demote_self');
                     exit;
@@ -160,7 +159,7 @@ class AdminController {
         
         $userId = $_GET['id'] ?? 0;
         
-        // Ne pas se supprimer soi-même
+        
         if ($userId == $_SESSION['user_id']) {
             header('Location: index.php?page=admin_users&error=cannot_delete_self');
             exit;
@@ -169,11 +168,11 @@ class AdminController {
         try {
             $pdo = Database::getConnection();
             
-            // Supprimer les favoris de l'utilisateur
+            
             $stmt = $pdo->prepare("DELETE FROM mooc_favoris WHERE user_id = ?");
             $stmt->execute([$userId]);
             
-            // Supprimer l'utilisateur
+            
             $stmt = $pdo->prepare("DELETE FROM utilisateurs WHERE id = ?");
             $stmt->execute([$userId]);
             
@@ -326,12 +325,12 @@ class AdminController {
         try {
             $pdo = Database::getConnection();
             
-            // Récupérer les fichiers à supprimer
+            
             $stmt = $pdo->prepare("SELECT image, video FROM moocs WHERE id = ?");
             $stmt->execute([$id]);
             $mooc = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            // Supprimer les fichiers locaux
+            
             if ($mooc['image'] && !UploadHelper::isExternalUrl($mooc['image'])) {
                 UploadHelper::deleteFile($mooc['image']);
             }
@@ -339,11 +338,11 @@ class AdminController {
                 UploadHelper::deleteFile($mooc['video']);
             }
             
-            // Supprimer les favoris
+            
             $stmt = $pdo->prepare("DELETE FROM mooc_favoris WHERE mooc_id = ?");
             $stmt->execute([$id]);
             
-            // Supprimer le MOOC
+            
             $stmt = $pdo->prepare("DELETE FROM moocs WHERE id = ?");
             $stmt->execute([$id]);
             
@@ -385,13 +384,13 @@ class AdminController {
             try {
                 $pdo = Database::getConnection();
                 
-                // Gestion de l'image
+                
                 $imagePath = $_POST['image_url'] ?? '';
                 if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
                     $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'livres/images');
                 }
                 
-                // Gestion du fichier PDF
+                
                 $fichierPath = '';
                 if (isset($_FILES['fichier_file']) && $_FILES['fichier_file']['error'] !== UPLOAD_ERR_NO_FILE) {
                     $fichierPath = UploadHelper::uploadFile($_FILES['fichier_file'], 'livres/files', ['pdf', 'epub'], 20 * 1024 * 1024);
@@ -433,7 +432,7 @@ class AdminController {
                 $stmt->execute([$id]);
                 $oldLivre = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                // Gestion de l'image
+                
                 $imagePath = $_POST['image_url'] ?? $oldLivre['image'];
                 if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($oldLivre['image'] && !UploadHelper::isExternalUrl($oldLivre['image'])) {
@@ -442,7 +441,7 @@ class AdminController {
                     $imagePath = UploadHelper::uploadImage($_FILES['image_file'], 'livres/images');
                 }
                 
-                // Gestion du fichier
+                
                 $fichierPath = $oldLivre['fichier'] ?? '';
                 if (isset($_FILES['fichier_file']) && $_FILES['fichier_file']['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($oldLivre['fichier']) {
@@ -490,12 +489,12 @@ class AdminController {
         try {
             $pdo = Database::getConnection();
             
-            // Récupérer les fichiers
+            
             $stmt = $pdo->prepare("SELECT image, fichier FROM livres WHERE id = ?");
             $stmt->execute([$id]);
             $livre = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            // Supprimer les fichiers
+            
             if ($livre['image'] && !UploadHelper::isExternalUrl($livre['image'])) {
                 UploadHelper::deleteFile($livre['image']);
             }
@@ -503,7 +502,7 @@ class AdminController {
                 UploadHelper::deleteFile($livre['fichier']);
             }
             
-            // Supprimer le livre
+           
             $stmt = $pdo->prepare("DELETE FROM livres WHERE id = ?");
             $stmt->execute([$id]);
             

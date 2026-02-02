@@ -44,7 +44,7 @@
 </div>
 
 
-<!-- Section principale -->
+
  
 <div class="container mt-5 text-center">
     <h1 class="display-5 fw-bold">Bibliothèque numérique</h1>
@@ -72,13 +72,13 @@
     </div>
 </div>
 <?php
-$apiKey = "ae96fb6d699b01c0e5223faa80df57e5"; // Remplace par ta vraie clé GNews
+$apiKey = "ae96fb6d699b01c0e5223faa80df57e5"; 
 $maxNews = 12;
 
-// URL GNews (tech + français)
+
 $url = "https://gnews.io/api/v4/top-headlines?topic=technology&lang=fr&country=fr&max={$maxNews}&apikey={$apiKey}";
 
-// Récupération des données
+
 $response = file_get_contents($url);
 $actualites = [];
 

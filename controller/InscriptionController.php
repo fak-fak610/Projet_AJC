@@ -13,7 +13,7 @@ class InscriptionController {
         $confirm_password = $_POST['confirm_password'] ?? '';
         $errors = [];
 
-        // Validation des champs requis
+        
         if (!$username) {
             $errors[] = "Le nom d'utilisateur est requis.";
         }
@@ -27,7 +27,7 @@ class InscriptionController {
             $errors[] = "La confirmation du mot de passe est requise.";
         }
 
-        // Validation du mot de passe
+        
         if ($password) {
             if (strlen($password) < 6) {
                 $errors[] = "Le mot de passe doit contenir au moins 6 caractères.";
@@ -40,12 +40,12 @@ class InscriptionController {
             }
         }
 
-        // Vérifier si les mots de passe correspondent
+        
         if ($password !== $confirm_password) {
             $errors[] = "Les mots de passe ne correspondent pas.";
         }
 
-        // Vérifier si l'utilisateur ou l'email existe déjà
+        
         if ($username && User::getByUsername($username)) {
             $errors[] = "Ce nom d'utilisateur est déjà pris.";
         }

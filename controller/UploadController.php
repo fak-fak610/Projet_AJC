@@ -8,7 +8,7 @@ class UploadController {
     }
 
     public function upload() {
-        // ? Vérifie si la session n'est pas déjà démarrée
+        
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -16,21 +16,21 @@ class UploadController {
         $message = '';
         $type = '';
 
-        // Vérifier si l'utilisateur est connecté
+        
         if (!isset($_SESSION['user_id'])) {
             $message = "Vous devez être connecté pour uploader un document.";
             $type = "danger";
         } else {
-            // Traitement de l'upload
+            
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
                 $file = $_FILES['document'];
                 $userId = $_SESSION['user_id'];
                 
-                // Extensions autorisées
+                
                 $allowedExtensions = ['pdf', 'doc', 'docx', 'pptx', 'txt', 'odt', 'xlsx'];
                 $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                 
-                // Vérifications
+                
                 if ($file['error'] !== UPLOAD_ERR_OK) {
                     $message = "Erreur lors de l'upload du fichier.";
                     $type = "danger";
@@ -41,19 +41,19 @@ class UploadController {
                     $message = "Le fichier est trop volumineux (max 10 Mo).";
                     $type = "danger";
                 } else {
-                    // Créer le dossier si nécessaire
+                    
                     $uploadDir = '../documents_biblio/';
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0755, true);
                     }
                     
-                    // Nom unique pour éviter les collisions
+                    
                     $newFileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file['name']);
                     $destination = $uploadDir . $newFileName;
                     
-                    // Déplacer le fichier
+                    
                     if (move_uploaded_file($file['tmp_name'], $destination)) {
-                        // Enregistrer dans la base de données
+                        
                         try {
                             $pdo = Database::getConnection();
                             $stmt = $pdo->prepare("INSERT INTO documents_user (nom, chemin, upload_time) VALUES (?, ?, NOW())");
@@ -73,7 +73,7 @@ class UploadController {
             }
         }
 
-        // Récupérer tous les documents
+        
         try {
             $pdo = Database::getConnection();
             $stmt = $pdo->query("SELECT * FROM documents_user ORDER BY upload_time DESC");
@@ -86,7 +86,7 @@ class UploadController {
             }
         }
 
-        // Charger la vue
+        
         require_once '../view/upload_view.php';
     }
 }

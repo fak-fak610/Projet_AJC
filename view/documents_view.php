@@ -5,7 +5,7 @@
     <h1 class="display-5 fw-bold text-white mb-2">Bibliothèque numérique</h1>
     <p class="lead text-white-50 mb-4">Partagez et consultez des documents informatiques utiles.</p>
 
-    <!-- Formulaire d'upload -->
+    
     <div class="upload-card card shadow-lg mx-auto">
       <div class="card-body p-4">
         <h5 class="mb-2">📤 Partager un document informatique</h5>
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <!-- Slides des derniers fichiers uploadés -->
+    
     <?php if(!empty($files)): ?>
         <h5 class="mt-4 text-white">📂 Derniers fichiers uploadés :</h5>
         <div class="d-flex overflow-auto pb-2">

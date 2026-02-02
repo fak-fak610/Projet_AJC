@@ -5,9 +5,9 @@ class BibliothequeController {
     public function index() {
         global $pdo;
 
-        // ============================
-        // 🔹 Récupération actualités GNews
-        // ============================
+        
+        // Récupération actualités GNews
+       
         $apiKey = "ae96fb6d699b01c0e5223faa80df57e5";
         $maxNews = 12;
 
@@ -22,7 +22,7 @@ class BibliothequeController {
             }
         }
 
-        // Charger la vue
+        
         include __DIR__ . '/../view/bibliotheque_view.php';
 
     }

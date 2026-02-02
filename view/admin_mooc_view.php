@@ -12,7 +12,7 @@
         <div class="alert alert-info"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
-    <!-- FORM AJOUT -->
+    
     <form method="post" class="mb-4">
         <input type="hidden" name="action" value="ajouter">
         <div class="mb-2"><input type="text" name="titre" class="form-control" placeholder="Titre"></div>
@@ -21,7 +21,7 @@
         <button type="submit" class="btn btn-success">Ajouter</button>
     </form>
 
-    <!-- LISTE ET FORM MODIF + SUPPR -->
+    
     <table class="table table-bordered">
         <thead><tr><th>ID</th><th>Titre</th><th>Description</th><th>Image</th><th>Actions</th></tr></thead>
         <tbody>

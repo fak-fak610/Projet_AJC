@@ -4,7 +4,6 @@ require_once __DIR__ . '/../config.php';
 class Article {
     public static function getAll() {
         $pdo = Database::getConnection();
-        // On utilise 'actualites' au lieu de 'articles'
         $stmt = $pdo->query("SELECT * FROM actualites ORDER BY date_evt DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

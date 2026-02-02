@@ -6,9 +6,9 @@ class FavorisController {
         session_start();
         $pdo = Database::getConnection();
 
-        // Vérification connexion utilisateur
+        
         if (empty($_SESSION['user_id'])) {
-            // NON CONNECTÉ : HTML COMPLET avec <head> et CSS (comme la branche connectée)
+            
             echo '
             <!DOCTYPE html>
             <html lang="fr">
@@ -37,14 +37,14 @@ class FavorisController {
 
         $user_id = $_SESSION['user_id'];
 
-        // Supprimer un favori
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'supprimer_favori') {
             $mooc_id = (int)$_POST['mooc_id']; // cast sécurisé
             Mooc::removeFavori($user_id, $mooc_id);
             $message = "Favori retiré !";
         }
 
-        // Liste des favoris
+        
         $favoris = Mooc::getFavoris($user_id);
 
         include 'view/mes_favoris.php';

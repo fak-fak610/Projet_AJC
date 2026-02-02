@@ -5,24 +5,24 @@ class AdminMoocController {
     public function index() {
         $message = "";
 
-        // AJOUT
+        
         if (isset($_POST['action']) && $_POST['action'] == 'ajouter') {
             $titre = $_POST['titre'] ?? '';
             $description = $_POST['description'] ?? '';
-            $image = $_POST['image'] ?? ''; // chemin du fichier image
+            $image = $_POST['image'] ?? ''; 
             if ($titre && $description) {
                 Mooc::create($titre, $description, $image);
                 $message = "MOOC ajouté !";
             }
         }
 
-        // SUPPRESSION
+        
         if (isset($_POST['action']) && $_POST['action'] == 'supprimer' && isset($_POST['id'])) {
             Mooc::delete($_POST['id']);
             $message = "MOOC supprimé !";
         }
 
-        // MODIFICATION
+        
         if (isset($_POST['action']) && $_POST['action'] == 'modifier') {
             $id = $_POST['id'] ?? '';
             $titre = $_POST['titre'] ?? '';
@@ -34,10 +34,10 @@ class AdminMoocController {
             }
         }
 
-        // Liste des MOOC
+        
         $moocs = Mooc::getAll();
 
-        // Charger la vue admin
+        
         require_once '../view/admin_mooc_view.php';
     }
 }

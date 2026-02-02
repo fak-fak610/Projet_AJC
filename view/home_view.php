@@ -2,14 +2,14 @@
 
 <main class="container py-5">
 
-    <!-- Bandeau d'accueil -->
+    
     <section class="mb-5 text-center">
         <h1>Bienvenue sur le Centre MOOC</h1>
         <p>Découvrez nos MOOC et notre bibliothèque en ligne.</p>
         <a href="index.php?page=mooc" class="btn btn-primary">Commencer à apprendre</a>
     </section>
 
-    <!-- Section des services -->
+    
     <section class="row text-center justify-content-center mb-5">
         <div class="col-md-6 mb-3">
             <div class="card p-4 h-100 d-flex flex-column justify-content-between">
@@ -33,7 +33,7 @@
         </div>
     </section>
 
-    <!-- Section Cours à la Une -->
+    
     <section class="mb-5">
         <div class="text-center mb-4">
             <h2 class="mb-2">Cours à la Une</h2>
@@ -61,7 +61,7 @@
         </div>
     </section>
 
-    <!-- Section Actualités locales -->
+    
     <section class="mb-5">
         <h2 class="mb-4 text-center">Actualités locales</h2>
         <div class="row justify-content-center">
@@ -83,7 +83,7 @@
         </div>
     </section>
 
-    <!-- Section Actualités éducatives (NewsAPI) - Marche maintenant avec ta clé valide -->
+    
     <section class="mb-5">
         <h2 class="mb-4 text-center">Actualités éducatives</h2>
         <div class="row justify-content-center">
@@ -111,7 +111,7 @@
         </div>
     </section>
 
-    <!-- Section Dernières émissions France Culture (Radio France API avec grid) -->
+    
     <section class="mb-5">
         <h2 class="mb-4 text-center">
             <i class="fas fa-headphones"></i> Dernières émissions France Culture

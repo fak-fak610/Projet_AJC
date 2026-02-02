@@ -10,8 +10,8 @@ class MotDePasseOublieController {
         $email = $_POST['email'] ?? '';
 
         if ($email) {
-            // Logique pour réinitialiser le mot de passe (envoyer un email, etc.)
-            // Pour l'exemple, on simule
+            
+            
             echo "Un email de réinitialisation a été envoyé à $email.";
         } else {
             echo "Erreur : email requis.";
