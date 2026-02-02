@@ -18,7 +18,9 @@ class Mooc {
     public static function create($titre, $description, $image) {
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare("INSERT INTO moocs (titre, description, image, date) VALUES (?, ?, ?, NOW())");
-        return $stmt->execute([$titre, $description, $image]);
+        $result = $stmt->execute([$titre, $description, $image]);
+        $pdo->exec("DELETE FROM cache WHERE cache_key = 'moocs_recent'");
+        return $result;
     }
 
     public static function update($id, $titre, $description, $image) {
@@ -30,7 +32,9 @@ class Mooc {
     public static function delete($id) {
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare("DELETE FROM moocs WHERE id = ?");
-        return $stmt->execute([$id]);
+        $result = $stmt->execute([$id]);
+        $pdo->exec("DELETE FROM cache WHERE cache_key = 'moocs_recent'");
+        return $result;
     }
 
     public static function getFavoris($user_id) {

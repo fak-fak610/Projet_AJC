@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 require_once '../model/User.php';
 require_once '../model/Cache.php';
+require_once '../model/mooc.php';
 
 class HomeController {
     public function index() {
@@ -16,12 +17,9 @@ class HomeController {
         $pdo = Database::getConnection();
 
         
-        $coursAlaUne = Cache::get('moocs_recent');
-        if (!$coursAlaUne) {
-            $stmt = $pdo->query('SELECT id, titre, description, image FROM moocs ORDER BY id DESC LIMIT 6');
-            $coursAlaUne = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            Cache::set('moocs_recent', $coursAlaUne, 3600); 
-        }
+        // Utilise le modèle Mooc (pas le cache directement)
+        $coursAlaUne = Mooc::getAll();
+        $coursAlaUne = array_slice($coursAlaUne, 0, 6); // 6 plus récents
 
         
         $livres = Cache::get('livres_recent');
