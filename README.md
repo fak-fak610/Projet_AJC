@@ -1,8 +1,8 @@
-# Projet AJC - Centre MOOC
+# Projet AJC - Centre MOOC - BIBLIOTHEQUE
 
 ## Description
 
-Le **Projet AJC - Centre MOOC** est une plateforme éducative développée en PHP utilisant l'architecture MVC (Modèle-Vue-Contrôleur). Ce site web permet aux utilisateurs d'accéder à des cours en ligne ouverts et massifs (MOOC), de consulter une bibliothèque numérique, et d'interagir avec du contenu éducatif. Il offre également des fonctionnalités d'administration pour gérer les utilisateurs, les cours et les ressources.
+Le **Projet AJC - Centre MOOC-BIBLIOTHEQUE ** est une plateforme éducative développée en PHP utilisant l'architecture MVC (Modèle-Vue-Contrôleur). Ce site web permet aux utilisateurs d'accéder à des cours en ligne ouverts et massifs (MOOC), de consulter une bibliothèque numérique, et d'interagir avec du contenu éducatif. Il offre également des fonctionnalités d'administration pour gérer les utilisateurs, les cours et les ressources.
 
 Le site est conçu pour être accessible via un serveur local comme WAMP, et nécessite une base de données pour stocker les informations des utilisateurs, des cours et des ressources.
 
@@ -60,7 +60,7 @@ Le site est conçu pour être accessible via un serveur local comme WAMP, et né
 
 ## Contributeurs
 
-- Développé par l'équipe AJC.
+- Développé par Gaël Lutumba Et Fakri Leclerc
 
 ## Licence
 
