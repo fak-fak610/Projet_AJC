@@ -1,7 +1,3 @@
-pour ma page article elle est a jour 
-
-articles controller
-
 <?php
 require_once('../model/Article.php');
 
