@@ -26,7 +26,7 @@
     <p class="lead">Le MOOC repose sur un format 100 % numérique qui combine vidéos pédagogiques, quiz interactifs, forums de discussion et exercices pratiques.</p>
     
     
-    <a href="index.php?page=mooc_revolution"
+    <a href="index.php?page=mooc"
        target="_blank"
        class="btn btn-light mt-3">
        Découvrir le MOOC
